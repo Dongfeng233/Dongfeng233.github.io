@@ -25,6 +25,7 @@ export default function AboutMe() {
           alt="Avatar"
           width="100"
           height="100"
+          loading="eager"
           className="mx-auto mt-6 max-w-md rounded-full drop-shadow-sm ring-2 ring-border transition-all duration-300 hover:scale-105 hover:ring-accent"
         />
       </Link>

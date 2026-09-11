@@ -1,4 +1,4 @@
 - name: "Prologue"
   description: "这个博客所使用的开源模板"
   blog_url: "https://prologue.dev/"
-  avatar: "https://prologue.dev/static/favicons/avatar.png"
+  avatar: "/static/avatars/template-avatar.svg"
