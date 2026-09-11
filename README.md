@@ -58,6 +58,10 @@ npm run start
 npm run build:content
 ```
 
+## GitHub Pages
+
+推送 `main` 分支后，GitHub Actions 会生成静态站点并发布到 <https://dongfeng233.github.io>。
+
 ## 同步模板更新
 
 项目保留 `upstream` 指向原始模板：

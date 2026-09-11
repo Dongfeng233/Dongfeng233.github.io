@@ -30,7 +30,7 @@
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --font-serif: "LXGW WenKai", "Songti SC", "SimSun", Georgia,
     "Times New Roman", serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular,
+  --font-mono: "LXGW WenKai Mono", ui-monospace, SFMono-Regular,
     Menlo, Consolas, "Liberation Mono", monospace;
 
   --radius-card: 0.75rem;

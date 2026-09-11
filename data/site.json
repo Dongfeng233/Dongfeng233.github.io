@@ -13,13 +13,13 @@
     "阅读",
     "随笔"
   ],
-  "siteUrl": "http://localhost:3000",
-  "siteRepo": "my-blog",
+  "siteUrl": "https://dongfeng233.github.io",
+  "siteRepo": "Dongfeng233.github.io",
   "favicon": "/favicon.svg",
-  "avatar": "/static/favicons/avatar-template.svg",
+  "avatar": "/static/avatars/-1513029915584963927.suf..jpg",
   "cover": "/static/favicons/cover-template.svg",
   "email": "",
-  "github": "",
+  "github": "Dongfeng233",
   "giscus": {
     "enabled": false,
     "repoId": "",

@@ -1,6 +1,8 @@
 import { createFeed } from "../../lib/feed/build-feed";
 import { finalizeRss } from "../../lib/feed/finalize";
 
+export const dynamic = "force-static";
+
 // Feed content only changes on deploy; edge-cache for 10 minutes with
 // background revalidation so readers always get a fast response and the
 // route stops rebuilding ~0.8MB of post HTML on every poll.

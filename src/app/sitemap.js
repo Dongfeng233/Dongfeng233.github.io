@@ -1,5 +1,7 @@
 import { allPosts } from "contentlayer/generated";
 import siteMetadata from "../../data/sitemetadata";
+
+export const dynamic = "force-static";
 import { sortedTags } from "../lib/tag-counts";
 
 export default async function sitemap() {

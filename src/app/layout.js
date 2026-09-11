@@ -1,8 +1,8 @@
 import "./globals.css";
 import "lxgw-wenkai-webfont/lxgwwenkai-regular.css";
 import "lxgw-wenkai-webfont/lxgwwenkai-bold.css";
+import "lxgw-wenkai-webfont/lxgwwenkaimono-regular.css";
 import dynamic from "next/dynamic";
-import { JetBrains_Mono } from "next/font/google";
 import { Providers } from "../components/providers";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
@@ -11,12 +11,6 @@ import UmamiAnalytics from "../components/umami-analytics";
 import ThemeStyle from "../components/theme-style";
 
 const ImageLightbox = dynamic(() => import("../components/ImageLightbox"));
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
 
 export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -59,7 +53,6 @@ export default function RootLayout({ children }) {
     <html
       lang={siteMetadata.language}
       suppressHydrationWarning
-      className={jetbrainsMono.variable}
     >
       <head>
         <ThemeStyle />

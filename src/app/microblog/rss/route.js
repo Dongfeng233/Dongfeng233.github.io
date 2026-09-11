@@ -4,6 +4,8 @@ import { Feed } from "feed";
 import siteMetadata from "../../../../data/sitemetadata";
 import { getMicroblog, entryToHtml } from "../../../lib/microblog";
 
+export const dynamic = "force-static";
+
 const SITE = String(siteMetadata.siteUrl || "").replace(/\/+$/, "");
 
 const IMAGE_MIME = {

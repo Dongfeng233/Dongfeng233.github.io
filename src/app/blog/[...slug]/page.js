@@ -53,6 +53,7 @@ export async function generateMetadata(props) {
   const params = await props.params;
   const post = await getPostFromParams(params);
   if (!post) return {};
+  const socialImage = post.image?.trim() || siteMetadata.cover;
 
   return {
     title: post.title + " - " + siteMetadata.publishName,
@@ -62,17 +63,13 @@ export async function generateMetadata(props) {
       title: post.title + " - " + siteMetadata.publishName,
       description: post.description,
       type: "article",
-      images: [
-        post.image == ""
-          ? { url: `/og?title=${post.title}` }
-          : { url: post.image },
-      ],
+      images: [{ url: socialImage }],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title + " - " + siteMetadata.publishName,
       description: post.description,
-      images: [post.image === null ? `/og?title=${post.title}` : post.image],
+      images: [socialImage],
     },
   };
 }
@@ -97,10 +94,7 @@ export default async function PostPage(props) {
     datePublished: post.publishDate,
     dateModified: post.lastmod,
     headline: post.title,
-    image:
-      post.image == ""
-        ? [`/og?title=${post.title}`]
-        : [post.image, `/og?title=${post.title}`],
+    image: [post.image?.trim() || siteMetadata.cover],
     description: post.description,
     author: [
       {

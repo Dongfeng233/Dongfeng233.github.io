@@ -1,13 +1,17 @@
 const { withContentlayer } = require("next-contentlayer2");
+const isGitHubPages =
+  process.env.GITHUB_ACTIONS === "true" || process.env.GITHUB_PAGES === "true";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: isGitHubPages ? "export" : undefined,
+  trailingSlash: isGitHubPages,
   // Contentlayer injects a webpack config; empty turbopack silences Next 16's mismatch error.
   turbopack: {},
   images: {
     formats: ["image/avif", "image/webp"],
-    unoptimized: false,
+    unoptimized: isGitHubPages,
     path: '/_next/image',
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -18,15 +22,13 @@ const nextConfig = {
     // (middleware.js + vercel.json + headers() overrides).
     contentDispositionType: 'inline',
   },
-
-  async redirects() {
-    return [
-      // Numbered archive pagination was replaced by load-more.
-      { source: '/blog/page/:page*', destination: '/blog', permanent: true },
-      // Tag taxonomy merge: Web3 folded into Crypto (kept for old traffic).
-      { source: '/tags/Web3', destination: '/tags/Crypto', permanent: true },
-    ];
-  },
 };
+
+if (!isGitHubPages) {
+  nextConfig.redirects = async () => [
+    { source: '/blog/page/:page*', destination: '/blog', permanent: true },
+    { source: '/tags/Web3', destination: '/tags/Crypto', permanent: true },
+  ];
+}
 
 module.exports = withContentlayer(nextConfig);
