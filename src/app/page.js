@@ -10,6 +10,7 @@ import MicroblogSnippet from "../components/microblog-snippet";
 import TerminalQuotes from "../components/terminal-quotes";
 import PageTransition from "../components/page-transition";
 import { sortedTags } from "../lib/tag-counts";
+import { toPublicationDate } from "../lib/date";
 
 function getMicroblogQuotes() {
   try {
@@ -19,7 +20,7 @@ function getMicroblogQuotes() {
     );
     const entries = load(raw) || [];
     return [...entries]
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .sort((a, b) => toPublicationDate(b.date, b.time) - toPublicationDate(a.date, a.time))
       .map((e) => String(e.content || ""))
       .filter((c) => c.length >= 8)
       .slice(0, 8)
@@ -32,7 +33,7 @@ function getMicroblogQuotes() {
 export default function Home() {
   // Copy before sorting — allPosts is shared module state.
   const posts = [...allPosts]
-    .sort((a, b) => compareDesc(new Date(a.publishDate), new Date(b.publishDate)))
+    .sort((a, b) => compareDesc(toPublicationDate(a.publishDate, a.publishTime), toPublicationDate(b.publishDate, b.publishTime)))
     .map((post) => ({
       title: post.title,
       description: post.description,
@@ -41,6 +42,8 @@ export default function Home() {
       slug: post.slug,
       tags: post.tags,
       publishDate: post.publishDate,
+      publishTime: post.publishTime,
+      location: post.location,
       readingTime: post.readingTime?.text,
     }));
 

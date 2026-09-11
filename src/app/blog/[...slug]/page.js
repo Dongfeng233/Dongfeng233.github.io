@@ -13,7 +13,7 @@ import TagChips from "../../../components/tag-chips";
 import RelatedPosts from "../../../components/related-posts";
 import ReadingProgress from "../../../components/reading-progress";
 import { OptimizedHTMLRenderer } from "../../../components/optimized-html-renderer";
-import { formatDate } from "../../../lib/date";
+import { formatDate, formatPublication, toPublicationDate } from "../../../lib/date";
 
 const Comments = dynamic(() => import("../../../components/comments"), {
   loading: () => <div className="h-32" aria-hidden />,
@@ -27,7 +27,7 @@ async function getPostFromParams(params) {
 // Non-mutating: allPosts is shared module state and must not be sorted in place.
 function getAdjacentPosts(post) {
   const sortedPosts = [...allPosts].sort(
-    (a, b) => new Date(a.publishDate) - new Date(b.publishDate),
+    (a, b) => toPublicationDate(a.publishDate, a.publishTime) - toPublicationDate(b.publishDate, b.publishTime),
   );
 
   const currentIndex = sortedPosts.findIndex((p) => p === post);
@@ -91,11 +91,12 @@ export default async function PostPage(props) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    datePublished: post.publishDate,
+    datePublished: toPublicationDate(post.publishDate, post.publishTime).toISOString(),
     dateModified: post.lastmod,
     headline: post.title,
     image: [post.image?.trim() || siteMetadata.cover],
     description: post.description,
+    ...(post.location ? { contentLocation: { "@type": "Place", name: post.location } } : {}),
     author: [
       {
         "@type": "Person",
@@ -120,9 +121,10 @@ export default async function PostPage(props) {
       <div className="page-enter relative mx-auto max-w-7xl gap-8 xl:grid xl:grid-cols-10">
         <article className="prose dark:prose-invert col-span-8 mx-auto max-w-7xl py-8">
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted">
-            <time dateTime={post.publishDate}>
-              {formatDate(post.publishDate)}
+            <time dateTime={toPublicationDate(post.publishDate, post.publishTime).toISOString()}>
+              {formatPublication(post.publishDate, post.publishTime)}
             </time>
+            {post.location ? <><span aria-hidden="true">·</span><span>发布于 {post.location}</span></> : null}
             <span aria-hidden="true">·</span>
             <span>{post.readingTime.words} 字</span>
             <span aria-hidden="true">·</span>
@@ -182,7 +184,7 @@ export default async function PostPage(props) {
           {siteMetadata.github ? (
             <p className="not-prose py-2 text-right">
               <Link
-                href={`https://github.com/${siteMetadata.github}/${siteMetadata.siteRepo}/blob/master/data/content${post.urlslug}.md`}
+                href={`https://github.com/${siteMetadata.github}/${siteMetadata.siteRepo}/blob/main/data/content${post.urlslug}.md`}
                 target="_blank"
                 className="text-sm text-faint transition-colors duration-300 hover:text-accent"
               >

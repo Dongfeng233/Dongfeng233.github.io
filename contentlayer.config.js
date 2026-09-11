@@ -86,6 +86,16 @@ export const Post = defineDocumentType(() => ({
       type: "date",
       required: true,
     },
+    publishTime: {
+      type: "string",
+      default: "",
+      required: false,
+    },
+    location: {
+      type: "string",
+      default: "",
+      required: false,
+    },
     lastmod: {
       type: "date",
       required: false,

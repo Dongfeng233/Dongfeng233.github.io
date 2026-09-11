@@ -34,6 +34,8 @@ npm run dev
 title: 文章标题
 description: 一句话摘要
 publishDate: 2026-09-12
+publishTime: "09:30:15.250"
+location: "福州 · 家中"
 lastmod: 2026-09-12
 featured: true
 draft: false

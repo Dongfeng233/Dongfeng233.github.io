@@ -33,10 +33,12 @@ const index = posts
       slug: post.slug,
       tags,
       // Chinese labels make 经济/社会/… queries hit English-tagged posts.
-      text: [post.title, post.description || "", ...tags, ...labels]
+      text: [post.title, post.description || "", post.location || "", ...tags, ...labels]
         .filter(Boolean)
         .join(" "),
       date: post.publishDate,
+      publishTime: post.publishTime || "",
+      location: post.location || "",
       readingTime: post.readingTime?.text || "",
       featured: Boolean(post.featured),
     };

@@ -250,6 +250,8 @@ function cardProps(article) {
     title: article.title,
     description: article.description,
     publishDate: article.publishDate || article.date,
+    publishTime: article.publishTime,
+    location: article.location,
     tags: article.tags,
     readingTime: article.readingTime,
     featured: article.featured,

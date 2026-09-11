@@ -6,6 +6,7 @@ import { compareDesc } from "date-fns";
 import siteMetadata from "../../../data/sitemetadata";
 import { buildFeedContent } from "./content";
 import { absolutize, postUrl, siteUrl } from "./urls";
+import { toPublicationDate } from "../date";
 
 const AUTHOR = {
   name: siteMetadata.author,
@@ -75,18 +76,18 @@ export function createFeed() {
 
   const posts = allPosts
     .filter((post) => post.draft === false)
-    .sort((a, b) => compareDesc(new Date(a.publishDate), new Date(b.publishDate)));
+    .sort((a, b) => compareDesc(toPublicationDate(a.publishDate, a.publishTime), toPublicationDate(b.publishDate, b.publishTime)));
 
   for (const post of posts) {
     const url = postUrl(post.slug);
-    const published = new Date(post.publishDate);
+    const published = toPublicationDate(post.publishDate, post.publishTime);
     const updated = post.lastmod ? new Date(post.lastmod) : published;
 
     feed.addItem({
       title: post.title,
       id: url,
       link: url,
-      description: post.description,
+      description: `${post.description || ""}${post.location ? ` · 发布于 ${post.location}` : ""}`,
       content: buildFeedContent(post),
       author: [AUTHOR],
       date: updated,

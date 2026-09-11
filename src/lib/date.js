@@ -33,6 +33,24 @@ export function formatDateTime(dateLike) {
   return `${longDateTime.format(date)}（北京时间）`;
 }
 
+export function toPublicationDate(dateLike, time = "") {
+  const source = String(dateLike || "");
+  const datePart = /^\d{4}-\d{2}-\d{2}/.test(source)
+    ? source.slice(0, 10)
+    : toDate(dateLike).toISOString().slice(0, 10);
+  if (/^\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?$/.test(time)) {
+    const preciseTime = time.length === 5 ? `${time}:00.000` : time;
+    return new Date(`${datePart}T${preciseTime}+08:00`);
+  }
+  return toDate(dateLike);
+}
+
+export function formatPublication(dateLike, time = "") {
+  const date = toPublicationDate(dateLike, time);
+  if (Number.isNaN(date.getTime())) return "";
+  return time ? `${formatDate(dateLike)} ${time}` : formatDate(dateLike);
+}
+
 /** Current year, e.g. for the footer copyright. */
 export function currentYear() {
   return new Date().getFullYear();

@@ -4,6 +4,7 @@ import { compareDesc } from "date-fns";
 import PostsLayout from "../../blog/bloglistlayout";
 import { tagCounts, sortedTags } from "../../../lib/tag-counts";
 import { tagLabel } from "../../../../data/tagLabels";
+import { toPublicationDate } from "../../../lib/date";
 import siteMetadata from "../../../../data/sitemetadata";
 
 /**
@@ -44,7 +45,7 @@ export default async function Tag(props) {
   }
 
   const posts = [...filtered].sort((a, b) =>
-    compareDesc(new Date(a.publishDate), new Date(b.publishDate))
+    compareDesc(toPublicationDate(a.publishDate, a.publishTime), toPublicationDate(b.publishDate, b.publishTime))
   );
 
   return (

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import TagChips from "./tag-chips";
-import { formatDate } from "../lib/date";
+import { formatPublication, toPublicationDate } from "../lib/date";
 
 /**
  * The one post card used everywhere: home, archive, tag pages and related
@@ -18,6 +18,8 @@ export default function Card({
   title,
   description,
   publishDate,
+  publishTime = "",
+  location = "",
   tags,
   readingTime,
   featured = false,
@@ -28,7 +30,10 @@ export default function Card({
       className={`card card-interactive card-spotlight group relative flex flex-col p-5 ${className}`}
     >
       <div className="flex items-center gap-2 text-xs text-faint">
-        <time dateTime={publishDate}>{formatDate(publishDate)}</time>
+        <time dateTime={toPublicationDate(publishDate, publishTime).toISOString()}>
+          {formatPublication(publishDate, publishTime)}
+        </time>
+        {location ? <><span aria-hidden="true">·</span><span>{location}</span></> : null}
         {readingTime ? (
           <>
             <span aria-hidden="true">·</span>

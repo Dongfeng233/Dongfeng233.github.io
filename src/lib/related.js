@@ -1,3 +1,5 @@
+import { toPublicationDate } from "./date";
+
 /**
  * Related-posts selection — deterministic, build-time, zero client JS.
  *
@@ -22,7 +24,7 @@ function ageScore(candidateDate, referenceDate) {
 export function getRelatedPosts(post, allPosts, { exclude = [], count = 4 } = {}) {
   const excluded = new Set([post.slugAsParams, ...exclude]);
   const postTags = post.tags || [];
-  const referenceDate = new Date(post.publishDate).getTime();
+  const referenceDate = toPublicationDate(post.publishDate, post.publishTime).getTime();
 
   const scored = allPosts
     .filter((p) => p.draft !== true && !excluded.has(p.slugAsParams))
@@ -31,7 +33,7 @@ export function getRelatedPosts(post, allPosts, { exclude = [], count = 4 } = {}
       const overlap = candidateTags.filter((t) => postTags.includes(t)).length;
       const score =
         overlap * 10 +
-        ageScore(new Date(candidate.publishDate).getTime(), referenceDate) +
+        ageScore(toPublicationDate(candidate.publishDate, candidate.publishTime).getTime(), referenceDate) +
         (candidate.featured ? 1 : 0);
       return { candidate, overlap, score };
     });

@@ -61,7 +61,7 @@ export async function GET() {
 
   for (const entry of entries) {
     const url = `${SITE}/microblog#${entry.id}`;
-    const date = new Date(entry.date);
+    const date = new Date(entry.publishedAt);
     const first = entry.paragraphs[0] || "微博";
 
     feed.addItem({
@@ -69,7 +69,7 @@ export async function GET() {
       id: url,
       guid: url,
       link: url,
-      description: first.slice(0, 120),
+      description: `${first.slice(0, 120)}${entry.location ? ` · 发布于 ${entry.location}` : ""}`,
       content: entryToHtml(entry, (src) =>
         String(src).startsWith("/") ? `${SITE}${src}` : src
       ),

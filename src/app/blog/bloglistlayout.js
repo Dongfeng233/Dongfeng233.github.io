@@ -22,6 +22,8 @@ export default function PostsLayout({
       title: post.title,
       description: post.description || "",
       publishDate: post.publishDate,
+      publishTime: post.publishTime,
+      location: post.location,
       tags: post.tags || [],
       readingTime: post.readingTime?.text,
       featured: Boolean(post.featured),

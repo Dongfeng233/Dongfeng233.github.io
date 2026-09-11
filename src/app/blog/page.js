@@ -3,11 +3,12 @@ import { compareDesc } from "date-fns";
 import PostsLayout from "./bloglistlayout";
 import siteMetadata from "../../../data/sitemetadata";
 import { tagCounts, sortedTags } from "../../lib/tag-counts";
+import { toPublicationDate } from "../../lib/date";
 
 export default function Blog() {
   // Copy before sorting — allPosts is shared module state.
   const posts = [...allPosts].sort((a, b) =>
-    compareDesc(new Date(a.publishDate), new Date(b.publishDate))
+    compareDesc(toPublicationDate(a.publishDate, a.publishTime), toPublicationDate(b.publishDate, b.publishTime))
   );
 
   return (

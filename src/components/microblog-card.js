@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { formatDate } from "../lib/date";
+import { formatPublication } from "../lib/date";
+
+function EntryMeta({ entry }) {
+  return (
+    <div className="flex flex-wrap items-center gap-1.5 text-xs text-faint">
+      <time dateTime={entry.publishedAt}>{formatPublication(entry.date, entry.time)}</time>
+      {entry.location ? <><span aria-hidden="true">·</span><span>发布于 {entry.location}</span></> : null}
+    </div>
+  );
+}
 
 /**
  * Microblog entry card, sharing the site's card language.
@@ -46,7 +55,7 @@ export default function MicroblogCard({ entry, compact = false }) {
   if (compact) {
     return (
       <article id={entry.id} className="card card-spotlight p-4">
-        <time className="text-xs text-faint">{formatDate(entry.date)}</time>
+        <EntryMeta entry={entry} />
         {entry.paragraphs[0] && (
           <p className="mt-1.5 line-clamp-4 text-sm leading-6 text-foreground/70">
             {entry.paragraphs[0]}
@@ -62,7 +71,7 @@ export default function MicroblogCard({ entry, compact = false }) {
   return (
     <article id={entry.id} className="card scroll-offset p-6">
       <div className="flex items-center justify-between gap-2">
-        <time className="text-xs text-faint">{formatDate(entry.date)}</time>
+        <EntryMeta entry={entry} />
       </div>
       <div className="mt-2 space-y-3">
         {entry.paragraphs.map((p, i) => (

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { load } from "js-yaml";
+import { toPublicationDate } from "./date";
 
 /**
  * Microblog data access + normalization.
@@ -29,7 +30,7 @@ export function getMicroblog() {
 
   return entries
     .map((entry, index) => normalize(entry, index))
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 }
 
 function normalize(entry, index) {
@@ -42,10 +43,21 @@ function normalize(entry, index) {
     typeof img === "string" ? { src: img, desc: "" } : { src: img.src, desc: img.desc || "" }
   );
 
-  const dateKey = String(entry.date || "").slice(0, 10).replace(/-/g, "");
+  const normalizedDate = entry.date instanceof Date
+    ? entry.date.toISOString().slice(0, 10)
+    : String(entry.date || "").slice(0, 10);
+  const dateKey = normalizedDate.replace(/-/g, "");
+  const time = /^\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?$/.test(String(entry.time || ""))
+    ? String(entry.time)
+    : "";
+  const location = String(entry.location || "").trim();
+  const publishedAt = toPublicationDate(normalizedDate, time).toISOString();
   return {
-    id: `mb-${dateKey}-${index}`,
-    date: entry.date,
+    id: `mb-${dateKey}-${time.replace(/[:.]/g, "") || index}`,
+    date: normalizedDate,
+    time,
+    location,
+    publishedAt,
     paragraphs,
     images,
   };
@@ -54,6 +66,9 @@ function normalize(entry, index) {
 /** HTML serialization for the microblog RSS feed (paragraphs + figures). */
 export function entryToHtml(entry, absolutize) {
   const parts = [];
+  if (entry.location) {
+    parts.push(`<p><small>发布于 ${escapeHtml(entry.location)}</small></p>`);
+  }
   for (const p of entry.paragraphs) {
     parts.push(`<p>${escapeHtml(p)}</p>`);
   }
