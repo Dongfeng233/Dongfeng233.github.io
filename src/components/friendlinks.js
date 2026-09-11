@@ -42,6 +42,11 @@ export default function FriendLinks({ friends }) {
         但愿十年后的某天，这些链接仍存活，与各位作者共勉。
       </p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {shuffledFriends.length === 0 ? (
+          <div className="card col-span-full px-6 py-12 text-center text-sm text-muted">
+            友链尚未添加，可在本地管理端随时维护。
+          </div>
+        ) : null}
         {shuffledFriends.map((friend) => (
           <Link
             key={friend.name}
@@ -67,7 +72,7 @@ export default function FriendLinks({ friends }) {
         如有意交换友链，请
         <Link
           className="mx-1 text-accent underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent-strong"
-          href="https://github.com/hxlog/prologue.dev/edit/master/data/links.yaml"
+          href="https://github.com/Dongfeng233/Dongfeng233.github.io/edit/main/data/links.yaml"
         >
           在Github上编辑links.yaml提PR
         </Link>
