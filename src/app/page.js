@@ -51,19 +51,7 @@ export default function Home() {
 
   return (
     <div className="relative">
-      <PageTransition>
-        <section className="mx-auto max-w-3xl pt-16 pb-8">
-          <p className="eyebrow">{siteMetadata.title}</p>
-          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
-            {siteMetadata.headerTitle}
-          </h1>
-          <p className="mt-4 font-serif text-lg leading-8 text-foreground/70">
-            {siteMetadata.description}
-          </p>
-        </section>
-      </PageTransition>
-
-      <div className="max-w-7xl pt-8 lg:grid lg:grid-cols-9 lg:gap-8">
+      <div className="max-w-7xl pt-10 lg:grid lg:grid-cols-9 lg:gap-8">
         <PageTransition className="col-span-7 max-w-4xl pt-6">
           <Articles articles={posts} topTags={topTags} />
         </PageTransition>
