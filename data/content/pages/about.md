@@ -24,3 +24,5 @@ description: 关于 Kaze 与这个博客。
 [ATOM Feed](/atomfeed)
 
 [JSON Feed](/jsonfeed)
+
+本站基于 [Prologue Blog Template](https://github.com/hxlog/prologue-blog-template) 搭建。
