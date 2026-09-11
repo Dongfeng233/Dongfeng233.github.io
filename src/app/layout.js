@@ -6,6 +6,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import siteMetadata from "../../data/sitemetadata";
 import UmamiAnalytics from "../components/umami-analytics";
+import ThemeStyle from "../components/theme-style";
 
 const ImageLightbox = dynamic(() => import("../components/ImageLightbox"));
 
@@ -77,6 +78,9 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
       className={`${notoSansSC.variable} ${notoSerifSC.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <ThemeStyle />
+      </head>
       <body className="mx-auto bg-background text-foreground antialiased">
         <Providers>
           <Navbar />

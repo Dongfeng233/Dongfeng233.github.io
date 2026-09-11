@@ -17,7 +17,7 @@ export default function Comments() {
       <Giscus
         repo={`${siteMetadata.github}/${siteMetadata.siteRepo}`}
         repoId={siteMetadata.repoid}
-        category="Announcements"
+        category={siteMetadata.giscus?.category || "Announcements"}
         categoryId={siteMetadata.categoryid}
         mapping="pathname"
         reactionsEnabled="1"

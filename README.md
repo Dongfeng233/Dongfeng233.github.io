@@ -20,6 +20,13 @@ npm run dev
 - 友链：`data/links.yaml`
 - 图片与其他静态文件：`public/`
 
+也可以使用相邻目录中的 `my-blog-admin` 网页管理端编辑以上内容：
+
+```powershell
+cd E:\Playground+\my-blog-admin
+npm run dev
+```
+
 文章使用 Markdown，Frontmatter 示例：
 
 ```yaml
