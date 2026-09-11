@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+  <defs>
+    <linearGradient id="kaze" x1="5" y1="5" x2="31" y2="31" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="36" height="36" rx="10" fill="#09090b"/>
+  <path d="M11 8v20M12 19l12-11M12 18l13 10" fill="none" stroke="url(#kaze)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
