@@ -1,13 +1,16 @@
 ---
 title: 从这里开始
 description: 为这个博客写下第一篇文章，也确定今后的记录方式。
-publishDate: 2026-09-12
-publishTime: "06:50:00.000"
-lastmod: 2026-09-12
+publishDate: '2026-09-12'
+publishTime: '06:50:00.000'
+lastmod: '2026-09-12'
 featured: true
 draft: false
-tags: ["Meta", "Technology"]
-categories: ["随笔"]
+tags:
+  - Meta
+  - Technology
+categories:
+  - 随笔
 image: /static/photos/template-cover.svg
 imageDesc: Kaze 的博客
 ---
