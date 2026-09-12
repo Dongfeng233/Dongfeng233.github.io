@@ -47,7 +47,9 @@ imageDesc: 图片说明
 
 ## 发布前配置
 
-在 `data/sitemetadata.js` 中填写邮箱、GitHub 用户名和仓库名。评论使用 Giscus，填入 `repoid` 与 `categoryid` 后自动显示。
+站点资料保存在 `data/site.json`，可通过本地管理端编辑。评论使用 Waline：在“站点设置 → 评论与审核”填写评论服务地址并启用，侧栏“评论审核”可打开专属审核后台。
+
+访客提交的评论进入待审核队列，站长批准后公开。访客修改已批准评论的正文后会重新待审。服务端源码位于相邻的 `my-blog-comments` 项目，`COMMENT_AUDIT` 已在服务入口固定开启。
 
 部署时把 `NEXT_PUBLIC_SITE_URL` 设置为博客的完整网址，例如 `https://blog.example.com`。
 

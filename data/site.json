@@ -20,6 +20,11 @@
   "cover": "/static/images/5469a4cd-030a-490c-a4a5-47fe9b6d7e83_upscayl_2x_high-fidelity-4x.png",
   "email": "",
   "github": "Dongfeng233",
+  "comments": {
+    "enabled": true,
+    "provider": "waline",
+    "serverUrl": "https://kaze-blog-comments.vercel.app"
+  },
   "giscus": {
     "enabled": false,
     "repoId": "",

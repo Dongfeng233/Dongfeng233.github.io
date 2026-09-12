@@ -14,6 +14,7 @@ import RelatedPosts from "../../../components/related-posts";
 import ReadingProgress from "../../../components/reading-progress";
 import { OptimizedHTMLRenderer } from "../../../components/optimized-html-renderer";
 import { formatDate, formatPublication, toPublicationDate } from "../../../lib/date";
+import { EMPTY_EXPORT_SLUG, staticContentParams } from "../../../lib/static-content-params.mjs";
 
 const Comments = dynamic(() => import("../../../components/comments"), {
   loading: () => <div className="h-32" aria-hidden />,
@@ -21,6 +22,7 @@ const Comments = dynamic(() => import("../../../components/comments"), {
 
 async function getPostFromParams(params) {
   const slug = params?.slug?.join("/");
+  if (slug === EMPTY_EXPORT_SLUG) return undefined;
   return allPosts.find((post) => post.slugAsParams === slug);
 }
 
@@ -75,9 +77,7 @@ export async function generateMetadata(props) {
 }
 
 export async function generateStaticParams() {
-  return allPosts.map((post) => ({
-    slug: post.slugAsParams.split("/"),
-  }));
+  return staticContentParams(allPosts.map((post) => post.slugAsParams));
 }
 
 export default async function PostPage(props) {
@@ -193,9 +193,9 @@ export default async function PostPage(props) {
             </p>
           ) : null}
 
-          {siteMetadata.github && siteMetadata.repoid && siteMetadata.categoryid ? (
+          {siteMetadata.commentsEnabled ? (
             <Suspense fallback={<div className="h-32" aria-hidden />}>
-              <Comments />
+              <Comments path={`/blog/${post.slugAsParams}`} title={post.title} />
             </Suspense>
           ) : null}
           <div className="not-prose">
@@ -262,11 +262,7 @@ export default async function PostPage(props) {
         </div>
       </div>
 
-      <ScrollTopAndComment
-        showComments={Boolean(
-          siteMetadata.github && siteMetadata.repoid && siteMetadata.categoryid,
-        )}
-      />
+      <ScrollTopAndComment showComments={siteMetadata.commentsEnabled} />
     </>
   );
 }

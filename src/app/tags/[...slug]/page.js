@@ -6,20 +6,17 @@ import { tagCounts, sortedTags } from "../../../lib/tag-counts";
 import { tagLabel } from "../../../../data/tagLabels";
 import { toPublicationDate } from "../../../lib/date";
 import siteMetadata from "../../../../data/sitemetadata";
+import { EMPTY_EXPORT_SLUG, staticContentParams } from "../../../lib/static-content-params.mjs";
 
-/**
- * Prerender every known tag page at build time (the tag set is a finite,
- * closed list from the taxonomy). This removes the per-request SSR that made
- * /tags/* the worst-TTFB pages on the site. Unknown tags still resolve at
- * request time and 404 via notFound().
- */
+/** Prerender the tags used by published posts; unknown tags render notFound(). */
 export function generateStaticParams() {
-  return sortedTags.map((tag) => ({ slug: [tag] }));
+  return staticContentParams(sortedTags);
 }
 
 export async function generateMetadata(props) {
   const params = await props.params;
   const slug = params?.slug?.join("/");
+  if (slug === EMPTY_EXPORT_SLUG) return {};
   const label = tagLabel(slug);
   return {
     title: `${label} - ${siteMetadata.publishName}`,
@@ -36,6 +33,7 @@ export async function generateMetadata(props) {
 export default async function Tag(props) {
   const params = await props.params;
   const slug = params?.slug?.join("/");
+  if (slug === EMPTY_EXPORT_SLUG) notFound();
 
   const filtered = allPosts.filter(
     (post) => post.draft !== true && (post.tags || []).includes(slug)

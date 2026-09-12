@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Comments from "./comments";
+import siteMetadata from "../../data/sitemetadata";
 
 // Small, fast, deterministic PRNG (mulberry32) — pure function, safe to use during render
 function mulberry32(seed) {
@@ -76,9 +77,9 @@ export default function FriendLinks({ friends }) {
         >
           在Github上编辑links.yaml提PR
         </Link>
-        或在评论区告知：）
+        {siteMetadata.commentsEnabled ? "或在评论区告知：）" : null}
       </p>
-      <Comments />
+      {siteMetadata.commentsEnabled ? <Comments path="/links" title="友情链接" /> : null}
     </div>
   );
 }

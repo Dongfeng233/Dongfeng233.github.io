@@ -7,6 +7,7 @@ import siteMetadata from "../../../data/sitemetadata"
 import TableofContent from "../../components/toc"
 import ScrollTopAndComment from "../../components/scroll"
 import PageTransition from "../../components/page-transition"
+import { EMPTY_EXPORT_SLUG, staticContentParams } from "../../lib/static-content-params.mjs"
 
 const Comments = dynamic(() => import("../../components/comments"), {
   loading: () => <div className="h-32" aria-hidden />,
@@ -17,6 +18,7 @@ const Comments = dynamic(() => import("../../components/comments"), {
 
 async function getPageFromParams(params) {
   const slug = params?.slug?.join("/")
+  if (slug === EMPTY_EXPORT_SLUG) return undefined
   const page = allPages.find((page) => page.slugAsParams === slug)
 
   if (!page) {
@@ -60,9 +62,7 @@ export async function generateMetadata(props) {
 }
 
 export async function generateStaticParams() {
-  return allPages.map((page) => ({
-    slug: page.slugAsParams.split("/"),
-  }))
+  return staticContentParams(allPages.map((page) => page.slugAsParams))
 }
 
 export default async function PagePage(props) {
@@ -87,9 +87,11 @@ export default async function PagePage(props) {
           )}
           <MDXComponent code={page.body.code} />
           <hr />
-          <Suspense fallback={<div className="h-32" aria-hidden />}>
-            <Comments />
-          </Suspense>
+          {siteMetadata.commentsEnabled ? (
+            <Suspense fallback={<div className="h-32" aria-hidden />}>
+              <Comments path={`/${page.slugAsParams}`} title={page.title} />
+            </Suspense>
+          ) : null}
         </article>
       </PageTransition>
       <div
@@ -99,6 +101,6 @@ export default async function PagePage(props) {
         <p className="py-4 text-sm font-medium text-muted">目录</p>
         <TableofContent headings={page.headings} />
       </div>
-    </div><ScrollTopAndComment /></>
+    </div><ScrollTopAndComment showComments={siteMetadata.commentsEnabled} /></>
   )
 }
