@@ -3,26 +3,8 @@ title: 关于
 description: 关于 Kaze 与这个博客。
 ---
 
-## 关于我
+## 我是谁？
 
-### Kaze
-
-写代码，也写下阅读、生活与持续变化的想法。
-
-这个博客是我的长期笔记本。这里会收录技术实践、读书札记和日常观察，也会保留那些仍在生长中的问题。
-
-## 写作方向
-
-* 技术与创作工具
-* 阅读、学习与知识整理
-* 日常生活里的具体发现
-
-## 订阅
-
-[RSS Feed](/rss)
-
-[ATOM Feed](/atomfeed)
-
-[JSON Feed](/jsonfeed)
+<br />
 
 本站基于 [Prologue Blog Template](https://github.com/hxlog/prologue-blog-template) 搭建。

@@ -5,7 +5,7 @@ publishDate: '2026-09-12'
 publishTime: '06:50:00.000'
 lastmod: '2026-09-12'
 featured: true
-draft: false
+draft: true
 tags:
   - Meta
   - Technology
