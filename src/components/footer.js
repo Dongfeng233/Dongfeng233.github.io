@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="mt-16 border-t border-border">
       <div className="container mx-auto flex select-none flex-col items-center px-8 py-8 sm:flex-row">
         <div className="text-sm text-muted">
-          © {currentYear()} {sitemetadata.publishName}
+          © {currentYear()} {sitemetadata.publishName} · 保留所有权利
         </div>
         <p className="mt-4 text-sm text-muted sm:ml-4 sm:mt-0 sm:border-l sm:border-border sm:pl-4">
           Powered by{" "}

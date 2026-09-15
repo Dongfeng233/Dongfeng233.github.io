@@ -24,10 +24,10 @@ export default function Blog() {
 
 export const metadata = {
   title: `归档 - ${siteMetadata.publishName}`,
-  description: "All posts here! 所有文章在这里！",
+  description: "文章归档。",
   openGraph: {
     title: `归档 - ${siteMetadata.publishName}`,
-    description: "All posts here! 所有文章在这里！",
+    description: "文章归档。",
     url: `${siteMetadata.siteUrl}/blog`,
     images: [siteMetadata.cover],
     authors: [siteMetadata.author],
@@ -36,7 +36,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: `归档 - ${siteMetadata.publishName}`,
-    description: "All posts here! 所有文章在这里！",
+    description: "文章归档。",
     images: [siteMetadata.cover],
   },
   locale: siteMetadata.language,

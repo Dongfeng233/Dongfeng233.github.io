@@ -75,6 +75,8 @@ git fetch upstream
 git merge upstream/master
 ```
 
-## License
+## 版权与许可
 
-MIT
+博客原创内容（文章、独立页面、短动态及原创图片等）版权归 Kaze 所有，保留所有权利（All rights reserved）。转载、复制、改编或商业使用，请事先取得作者书面授权。完整声明见 [CONTENT-LICENSE.md](./CONTENT-LICENSE.md)。
+
+博客程序代码采用 [MIT 许可证](./LICENSE)，保留 Prologue Blog Template 原作者的版权与许可声明。

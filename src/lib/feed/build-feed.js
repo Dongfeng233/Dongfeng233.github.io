@@ -62,7 +62,7 @@ export function createFeed() {
     language: siteMetadata.language,
     favicon: `${site}${siteMetadata.favicon}`,
     image: `${site}${siteMetadata.avatar}`,
-    copyright: "CC BY-NC-SA 4.0",
+    copyright: `© ${siteMetadata.author}. 保留所有权利。All rights reserved.`,
     updated: new Date(),
     generator: "prologue.dev feed pipeline",
     ttl: 60,

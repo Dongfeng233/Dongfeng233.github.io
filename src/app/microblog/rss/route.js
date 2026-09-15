@@ -47,7 +47,7 @@ export async function GET() {
     language: siteMetadata.language,
     favicon: `${SITE}${siteMetadata.favicon}`,
     image: `${SITE}${siteMetadata.avatar}`,
-    copyright: "CC BY-NC-SA 4.0",
+    copyright: `© ${siteMetadata.author}. 保留所有权利。All rights reserved.`,
     updated: entries[0] ? new Date(entries[0].date) : new Date(),
     generator: "prologue.dev microblog feed",
     ttl: 60,

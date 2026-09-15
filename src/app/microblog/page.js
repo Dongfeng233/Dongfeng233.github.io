@@ -5,7 +5,7 @@ import { getMicroblog } from "../../lib/microblog";
 export async function generateMetadata() {
   return {
     title: "微博 Microblog",
-    description: "槐序的微博：碎片化的思考、图文与随想。",
+    description: "日常记录。",
   };
 }
 

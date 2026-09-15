@@ -36,16 +36,13 @@ export default function FriendLinks({ friends }) {
   return (
     <div className="container mx-auto p-4 py-12">
       <p className="eyebrow mx-auto w-fit">Friends</p>
-      <h2 className="pb-3 pt-2 text-center text-3xl font-semibold tracking-tight text-foreground">
+      <h2 className="pb-12 pt-2 text-center text-3xl font-semibold tracking-tight text-foreground">
         友情链接
       </h2>
-      <p className="pb-12 text-center text-sm text-muted">
-        但愿十年后的某天，这些链接仍存活，与各位作者共勉。
-      </p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {shuffledFriends.length === 0 ? (
           <div className="card col-span-full px-6 py-12 text-center text-sm text-muted">
-            友链尚未添加，可在本地管理端随时维护。
+            暂无友链。
           </div>
         ) : null}
         {shuffledFriends.map((friend) => (

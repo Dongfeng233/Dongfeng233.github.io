@@ -59,7 +59,7 @@ export default function TerminalQuotes({ quotes }) {
         <span className="terminal-dot" style={{ background: "#f87171" }} />
         <span className="terminal-dot" style={{ background: "#fbbf24" }} />
         <span className="terminal-dot" style={{ background: "#34d399" }} />
-        <span className="ml-2 text-xs text-faint">序章 · 随想</span>
+        <span className="ml-2 text-xs text-faint">微博</span>
       </div>
       <div className="min-h-[5.5rem] px-4 py-3 text-[13px] leading-6 text-muted">
         <span className="mr-1 select-none text-accent">❯</span>

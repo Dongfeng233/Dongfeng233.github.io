@@ -172,14 +172,9 @@ export default async function PostPage(props) {
             </p>
           ) : null}
 
-          <Link
-            href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-            target="_blank"
-          >
-            <p className="mt-10 py-2 text-sm text-faint transition-colors duration-300 hover:text-accent">
-              CC BY-NC-SA 4.0
-            </p>
-          </Link>
+          <p className="mt-10 py-2 text-sm text-faint">
+            © {siteMetadata.author} · 保留所有权利。转载、复制、改编或商业使用本文原创内容，请事先取得作者书面授权。
+          </p>
 
           {siteMetadata.github ? (
             <p className="not-prose py-2 text-right">
