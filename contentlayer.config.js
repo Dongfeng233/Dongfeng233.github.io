@@ -66,6 +66,10 @@ export const Page = defineDocumentType(() => ({
     description: {
       type: "string",
     },
+    lastmod: {
+      type: "date",
+      required: false,
+    },
   },
   computedFields,
 }));
