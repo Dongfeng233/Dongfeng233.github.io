@@ -24,7 +24,9 @@ export const metadata = {
   title: siteMetadata.title,
   description: siteMetadata.description,
   icons: {
-    icon: siteMetadata.favicon,
+    icon: siteMetadata.favicon || "/favicon.svg",
+    shortcut: siteMetadata.favicon || "/favicon.svg",
+    apple: siteMetadata.favicon || "/favicon.svg",
   },
   alternates: {
     canonical: "/",
