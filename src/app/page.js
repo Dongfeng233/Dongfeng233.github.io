@@ -32,7 +32,7 @@ function getMicroblogQuotes() {
 
 export default function Home() {
   // Copy before sorting — allPosts is shared module state.
-  const posts = [...allPosts]
+  const posts = allPosts.filter((post) => post.draft !== true)
     .sort((a, b) => compareDesc(toPublicationDate(a.publishDate, a.publishTime), toPublicationDate(b.publishDate, b.publishTime)))
     .map((post) => ({
       title: post.title,

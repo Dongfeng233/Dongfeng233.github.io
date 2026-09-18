@@ -4,7 +4,7 @@ import { allPosts } from "contentlayer/generated";
 import siteMetadata from "../../data/sitemetadata";
 
 const POSTS_NUM = allPosts.filter((p) => p.draft !== true).length;
-const TOTAL_WORDS = allPosts
+const TOTAL_WORDS = allPosts.filter((post) => post.draft !== true)
   .reduce((sum, post) => sum + (post.readingTime?.words ?? 0), 0)
   .toLocaleString();
 

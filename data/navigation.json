@@ -10,5 +10,9 @@
   {
     "href": "/blog",
     "title": "归档"
+  },
+  {
+    "href": "/explore",
+    "title": "探索"
   }
 ]

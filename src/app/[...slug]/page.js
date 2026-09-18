@@ -62,7 +62,7 @@ export async function generateMetadata(props) {
 }
 
 export async function generateStaticParams() {
-  return staticContentParams(allPages.map((page) => page.slugAsParams))
+  return staticContentParams(allPages.filter((page) => !["now", "explore"].includes(page.slugAsParams)).map((page) => page.slugAsParams))
 }
 
 export default async function PagePage(props) {

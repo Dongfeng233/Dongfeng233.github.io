@@ -79,6 +79,8 @@ export const Post = defineDocumentType(() => ({
   filePathPattern: `blog/**/*.md`,
   contentType: "markdown",
   fields: {
+    series: { type: "json", default: [] },
+    updates: { type: "json", default: [] },
     title: {
       type: "string",
       required: true,
@@ -140,7 +142,7 @@ export default makeSource({
   contentDirPath: "./data/content",
   documentTypes: [Post, Page],
   markdown: {
-    remarkPlugins: [remarkParse,remarkRehype, remarkGfm, remarkMath, remarkGemoji],
+    remarkPlugins: [remarkParse,[remarkRehype, { footnoteLabel: "旁注", footnoteBackLabel: "返回正文" }], remarkGfm, remarkMath, remarkGemoji],
     rehypePlugins: [
       [
         rehypeKatex,

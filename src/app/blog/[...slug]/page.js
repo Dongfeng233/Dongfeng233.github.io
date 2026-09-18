@@ -1,3 +1,7 @@
+import ArticleConnections from "../../../components/article-connections";
+import FootnotePopovers from "../../../components/footnote-popovers";
+import { getContentIndex } from "../../../lib/content-index";
+import "../../explore.css";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
@@ -28,7 +32,7 @@ async function getPostFromParams(params) {
 
 // Non-mutating: allPosts is shared module state and must not be sorted in place.
 function getAdjacentPosts(post) {
-  const sortedPosts = [...allPosts].sort(
+  const sortedPosts = allPosts.filter((item) => item.draft !== true).sort(
     (a, b) => toPublicationDate(a.publishDate, a.publishTime) - toPublicationDate(b.publishDate, b.publishTime),
   );
 
@@ -77,7 +81,7 @@ export async function generateMetadata(props) {
 }
 
 export async function generateStaticParams() {
-  return staticContentParams(allPosts.map((post) => post.slugAsParams));
+  return staticContentParams(allPosts.filter((post) => post.draft !== true).map((post) => post.slugAsParams));
 }
 
 export default async function PostPage(props) {
@@ -87,7 +91,9 @@ export default async function PostPage(props) {
     notFound();
   }
 
-  const adjacentPosts = getAdjacentPosts(post);
+  const contentIndex = getContentIndex();
+  const indexedArticle = contentIndex.nodes.find((node) => node.url === `/blog/${post.slugAsParams}`);
+  const adjacentPosts = indexedArticle?.series.length ? {} : getAdjacentPosts(post);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -165,6 +171,8 @@ export default async function PostPage(props) {
           ) : null}
 
           <OptimizedHTMLRenderer htmlContent={post.body.html} />
+          <FootnotePopovers />
+          <ArticleConnections article={indexedArticle} nodes={contentIndex.nodes} series={contentIndex.series} />
 
           {post.lastmod ? (
             <p className="mt-6 text-sm text-faint">

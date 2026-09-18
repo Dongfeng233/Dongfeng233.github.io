@@ -80,3 +80,12 @@ git merge upstream/master
 博客原创内容（文章、独立页面、短动态及原创图片等）版权归 Kaze 所有，保留所有权利（All rights reserved）。转载、复制、改编或商业使用，请事先取得作者书面授权。完整声明见 [CONTENT-LICENSE.md](./CONTENT-LICENSE.md)。
 
 博客程序代码采用 [MIT 许可证](./LICENSE)，保留 Prologue Blog Template 原作者的版权与许可声明。
+
+
+## 探索与个人记录
+
+`/explore` 汇总文章、系列、漫游、关系图与城市足迹；筛选状态可通过 URL 分享。`/now` 展示近况和书影音收藏。文章支持多个系列、反向引用、Markdown 脚注与公开更新记录。
+
+这些内容由本机管理端维护：公开配置使用 `data/series.json`、`data/collection.json`、`data/travel.json`，近况使用独立页面 `now`。草稿在服务端过滤后才进入公开页面数据。私人素材和写作日历保存在管理端本机目录中。
+
+离线世界底图来自 Natural Earth 的 1:110m land 数据，采用公共领域许可：<https://www.naturalearthdata.com/about/terms-of-use/>。
