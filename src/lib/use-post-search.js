@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { searchResult } from "./search-results.mjs";
 
 /**
  * Site-wide search over the build-time slim index (public/search-index.json,
@@ -21,11 +22,13 @@ const FUSE_OPTIONS = {
     { name: "text", weight: 0.8 },
     { name: "description", weight: 0.6 },
     { name: "tags", weight: 0.5 },
+    { name: "blocks.text", weight: 0.7 },
   ],
   ignoreLocation: true,
   minMatchCharLength: 2,
   threshold: 0.3,
   shouldSort: true,
+  includeMatches: true,
 };
 
 let fusePromise = null;
@@ -34,31 +37,25 @@ function getFuse() {
   if (!fusePromise) {
     fusePromise = Promise.all([
       import("fuse.js"),
-      fetch("/search-index.json").then((res) => res.json()),
-    ]).then(([mod, data]) => new mod.default(data, FUSE_OPTIONS));
+      fetch("/search-index.json").then((res) => { if (!res.ok) throw new Error("搜索索引暂时无法读取"); return res.json(); }),
+      fetch("/search-content.json").then((res) => { if (!res.ok) throw new Error("正文索引暂时无法读取"); return res.json(); }),
+    ]).then(([mod, data, content]) => new mod.default(data.map((post) => ({ ...post, blocks: content.find((entry) => entry.slug === post.slug)?.blocks || [] })), FUSE_OPTIONS)).catch((error) => { fusePromise = null; throw error; });
   }
   return fusePromise;
 }
 
 export function usePostSearch() {
   const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    getFuse().then(() => {
-      if (!cancelled) setReady(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const [error, setError] = useState("");
 
   const search = useCallback(async (query) => {
     const trimmed = (query || "").trim();
     if (trimmed.length < 2) return [];
-    const fuse = await getFuse();
-    return fuse.search(trimmed).map((result) => result.item);
+    try {
+      const fuse = await getFuse(); setReady(true); setError("");
+      return fuse.search(trimmed).map((result) => searchResult(result, trimmed));
+    } catch (reason) { setError(reason.message); return []; }
   }, []);
 
-  return { search, ready };
+  return { search, ready, error };
 }

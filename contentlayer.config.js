@@ -1,3 +1,8 @@
+import { fromHtml } from "hast-util-from-html";
+import { visibleText } from "./src/lib/reading-blocks.mjs";
+import readingAnchors from "./src/lib/reading-blocks.mjs";
+import remarkDirective from "remark-directive";
+import remarkFolds from "./src/lib/remark-folds.mjs";
 import { defineDocumentType, makeSource } from "contentlayer2/source-files";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -36,7 +41,19 @@ const computedFields = {
   headings: {
     type: "json",
     resolve: async (doc) => {
-      const regXHeader = /\n(?<flag>#{2,6})\s+(?<content>.+)/g;
+      if (doc.body.html) {
+        const headings = [];
+        function walk(node) {
+          if (node.type === "element" && /^h[2-6]$/.test(node.tagName) && node.properties?.id !== "footnote-label") {
+            const text = visibleText(node).trim();
+            if (text && node.properties?.id) headings.push({ level: node.tagName === "h2" ? "two" : "three", text, id: String(node.properties.id) });
+          }
+          for (const child of node.children || []) walk(child);
+        }
+        walk(fromHtml(doc.body.html, { fragment: true }));
+        return headings;
+      }
+      const regXHeader = /(?:^|\n)(?<flag>#{2,6})[ \t]+(?<content>.+)/g;
       const headings = Array.from(doc.body.raw.matchAll(regXHeader)).map(
         ({ groups }) => {
           const flag = groups?.flag;
@@ -141,8 +158,9 @@ export const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "./data/content",
   documentTypes: [Post, Page],
+  mdx: { remarkPlugins: [remarkGfm, remarkMath, remarkDirective, remarkFolds], rehypePlugins: [rehypeKatex, rehypeSlug, readingAnchors] },
   markdown: {
-    remarkPlugins: [remarkParse,[remarkRehype, { footnoteLabel: "旁注", footnoteBackLabel: "返回正文" }], remarkGfm, remarkMath, remarkGemoji],
+    remarkPlugins: [remarkParse, remarkDirective, remarkFolds,[remarkRehype, { footnoteLabel: "旁注", footnoteBackLabel: "返回正文" }], remarkGfm, remarkMath, remarkGemoji],
     rehypePlugins: [
       [
         rehypeKatex,
@@ -155,6 +173,7 @@ export default makeSource({
       rehypeSlug,
       rehypeFigure,
       rehypeMermaidPre,
+      readingAnchors,
       rehypeStringify,
             [
         rehypeShiki,

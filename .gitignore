@@ -30,3 +30,6 @@
 !.yarn/versions
 
 .env
+
+/public/search-content.json
+/public/link-index.json

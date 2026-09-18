@@ -24,6 +24,9 @@ export default function Card({
   readingTime,
   featured = false,
   className = "",
+  searchHits = [],
+  searchQuery = "",
+  searchHref,
 }) {
   return (
     <article
@@ -52,7 +55,7 @@ export default function Card({
 
       <h3 className="card-title mt-2.5 text-lg font-semibold leading-7 tracking-tight text-foreground transition-colors duration-200">
         <Link
-          href={slug}
+          href={searchHref || slug}
           className="after:absolute after:inset-0 after:content-['']"
         >
           {title}
@@ -65,6 +68,8 @@ export default function Card({
         </p>
       ) : null}
 
+      {searchHits.length ? <div className="search-passages relative z-10"><small>正文匹配</small>{searchHits.map((hit) => <Link key={hit.id} href={hit.href}><SearchExcerpt text={hit.excerpt} query={searchQuery} /></Link>)}</div> : null}
+
       {tags?.length ? (
         <div className="relative z-10 mt-auto pt-4">
           <TagChips tags={tags} />
@@ -72,4 +77,9 @@ export default function Card({
       ) : null}
     </article>
   );
+}
+
+function SearchExcerpt({ text, query }) {
+  const at = text.toLowerCase().indexOf(query.toLowerCase());
+  return at < 0 || !query ? text : <>{text.slice(0, at)}<mark>{text.slice(at, at + query.length)}</mark>{text.slice(at + query.length)}</>;
 }

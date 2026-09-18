@@ -18,7 +18,7 @@ export default function SearchGrid({ posts, className = "" }) {
   const [results, setResults] = useState([]);
   const [loadedFor, setLoadedFor] = useState("");
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const { search } = usePostSearch();
+  const { search, error } = usePostSearch();
 
   useEffect(() => {
     const timer = setTimeout(() => setDebounced(query.trim()), 150);
@@ -62,7 +62,7 @@ export default function SearchGrid({ posts, className = "" }) {
             setQuery(e.target.value);
             setVisible(PAGE_SIZE);
           }}
-          placeholder="搜索文章、标签…"
+          placeholder="搜索标题、标签与正文…"
           className="block w-full rounded-xl border border-border bg-surface px-4 py-2.5 pr-10 text-sm text-foreground shadow-card transition-all duration-200 placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
         />
         <svg
@@ -82,6 +82,7 @@ export default function SearchGrid({ posts, className = "" }) {
         </svg>
       </div>
 
+      {error && isSearching ? <p role="alert" className="search-error">{error}，请重新输入后重试。</p> : null}
       <div className="mt-6 min-h-[40vh]">
         {isSearching && searching ? (
           <p className="py-10 text-center text-sm text-faint">搜索中…</p>
@@ -90,6 +91,9 @@ export default function SearchGrid({ posts, className = "" }) {
             {list.map((post) => (
               <Card
                 key={post.slug}
+                searchHits={post.searchHits}
+                searchQuery={post.searchQuery}
+                searchHref={post.searchHref}
                 slug={post.slug}
                 title={post.title}
                 description={post.description}

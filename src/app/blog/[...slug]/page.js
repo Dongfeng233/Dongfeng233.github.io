@@ -1,3 +1,5 @@
+import ReaderTools from "../../../components/reader-tools";
+import LinkPreviews from "../../../components/link-previews";
 import ArticleConnections from "../../../components/article-connections";
 import FootnotePopovers from "../../../components/footnote-popovers";
 import { getContentIndex } from "../../../lib/content-index";
@@ -170,9 +172,11 @@ export default async function PostPage(props) {
             <p className="text-sm text-faint">{post.imageDesc}</p>
           ) : null}
 
-          <OptimizedHTMLRenderer htmlContent={post.body.html} />
+          <ReaderTools title={post.title} slug={`/blog/${post.slugAsParams}`} />
+          <div data-reading-body><OptimizedHTMLRenderer htmlContent={post.body.html} /></div>
+          <LinkPreviews />
           <FootnotePopovers />
-          <ArticleConnections article={indexedArticle} nodes={contentIndex.nodes} series={contentIndex.series} />
+          <ArticleConnections article={indexedArticle} nodes={contentIndex.nodes} series={contentIndex.series} collection={contentIndex.collection} />
 
           {post.lastmod ? (
             <p className="mt-6 text-sm text-faint">

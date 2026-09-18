@@ -24,7 +24,7 @@ export default function Articles({ articles, topTags = [] }) {
   const [results, setResults] = useState([]);
   const [loadedFor, setLoadedFor] = useState("");
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const { search } = usePostSearch();
+  const { search, error } = usePostSearch();
 
   const featuredArticles = useMemo(
     () => articles.filter((a) => a.featured && !a.draft),
@@ -142,6 +142,7 @@ export default function Articles({ articles, topTags = [] }) {
         </section>
       )}
 
+      {error && isSearching ? <p role="alert" className="search-error">{error}，请重新输入后重试。</p> : null}
       {/* Tabs */}
       <TabGroup selectedIndex={tabIndex} onChange={setTabIndex}>
         <TabList className="flex justify-between gap-2 border-b border-border pb-2">
@@ -234,7 +235,7 @@ export default function Articles({ articles, topTags = [] }) {
               </p>
             ) : (
               <p className="py-8 text-center text-sm text-faint">
-                输入关键词，全文搜索标题、简介与标签
+                输入关键词，搜索标题、标签与正文
               </p>
             )}
           </TabPanel>
@@ -246,6 +247,7 @@ export default function Articles({ articles, topTags = [] }) {
 
 function cardProps(article) {
   return {
+    searchHits: article.searchHits, searchQuery: article.searchQuery, searchHref: article.searchHref,
     slug: article.slug,
     title: article.title,
     description: article.description,

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { readingTop } from "./reader-tools";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -102,7 +103,7 @@ export default function TableofContent({ headings }) {
               data-level={heading.level}
               data-active={isActive ? "true" : undefined}
               data-ancestor={isAncestor ? "true" : undefined}
-              href={`#${heading.text}`}
+              href={`#${encodeURIComponent(heading.id)}`}
               className={`relative block ${indent} leading-7 rounded-md px-3 py-1 text-sm transition-colors duration-200 ${baseColor}`}
               onClick={(e) => {
                 e.preventDefault();
@@ -112,7 +113,8 @@ export default function TableofContent({ headings }) {
                 if (!target) return;
                 ignoreObserverRef.current = true;
                 setActiveId(target.id);
-                target.scrollIntoView({ behavior: "smooth", block: "start" });
+                for (let parent = target.parentElement; parent; parent = parent.parentElement) if (parent.tagName === "DETAILS") parent.open = true;
+                window.scrollTo({ top: window.scrollY + target.getBoundingClientRect().top - readingTop(), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
                 const release = () => {
                   ignoreObserverRef.current = false;
                 };

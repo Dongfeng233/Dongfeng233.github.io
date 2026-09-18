@@ -1,3 +1,4 @@
+import LinkPreviews from "../../components/link-previews";
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import dynamic from "next/dynamic"
@@ -85,7 +86,7 @@ export default async function PagePage(props) {
               {page.description}
             </p>
           )}
-          <MDXComponent code={page.body.code} />
+          <div data-reading-body><MDXComponent code={page.body.code} /></div><LinkPreviews />
           <hr />
           {siteMetadata.commentsEnabled ? (
             <Suspense fallback={<div className="h-32" aria-hidden />}>

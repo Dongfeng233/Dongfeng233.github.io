@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./reading.css";
 import "lxgw-wenkai-webfont/lxgwwenkai-regular.css";
 import "lxgw-wenkai-webfont/lxgwwenkai-bold.css";
 import "lxgw-wenkai-webfont/lxgwwenkaimono-regular.css";
