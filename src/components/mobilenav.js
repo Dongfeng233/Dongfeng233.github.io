@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import headerNavLinks from "../../data/headerNavLinks";
 import {
   Menu,
   Transition,
@@ -11,7 +10,7 @@ import {
 } from "@headlessui/react";
 import { Fragment } from "react";
 
-const MobileNav = () => {
+const MobileNav = ({ links }) => {
   return (
     <Menu as="div" className="relative inline-block text-left sm:hidden">
       <div>
@@ -46,7 +45,7 @@ const MobileNav = () => {
       >
         <MenuItems className="absolute right-0 z-50 mt-2 w-32 rounded-xl border border-border bg-surface p-2 shadow-pop">
           <div className="text-sm text-muted">
-            {headerNavLinks.map((link) => {
+            {links.map((link) => {
               return (
                 <div key={link.title} className="py-0.5">
                   <MenuItem>

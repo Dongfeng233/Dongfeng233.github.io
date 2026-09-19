@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import headerNavLinks from "../../data/headerNavLinks";
 import ThemeSwitch from "./themeswitch";
 import MobileNav from "./mobilenav";
 import RssModal from "./rss-modal";
@@ -9,7 +8,7 @@ import Link from "next/link";
 import siteMetadata from "../../data/sitemetadata";
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ links }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
@@ -36,7 +35,7 @@ export default function Navbar() {
 
         <nav className="flex items-center leading-6">
           <div className="hidden sm:block">
-            {headerNavLinks.map((link) => {
+            {links.map((link) => {
               const active = pathname.replace(/\/$/, "") === link.href.replace(/\/$/, "");
               return (
                 <Link
@@ -60,7 +59,7 @@ export default function Navbar() {
             so heights and baselines line up on one horizontal axis. */}
         <div className="flex items-center gap-0.5 leading-5">
           <RssModal />
-          <MobileNav />
+          <MobileNav links={links} />
           <ThemeSwitch />
         </div>
       </div>

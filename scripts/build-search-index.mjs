@@ -54,7 +54,7 @@ writeFileSync(path.join(ROOT, "public/search-content.json"), JSON.stringify(full
 const pageFile = path.join(ROOT, ".contentlayer/generated/Page/_index.json");
 const pages = JSON.parse(readFileSync(pageFile, "utf8"));
 const previews = index.map((post) => ({ url: post.slug, kind: "post", title: post.title, description: post.description || (fullText.find((entry) => entry.slug === post.slug)?.blocks.find((block) => block.text.length > 30) || fullText.find((entry) => entry.slug === post.slug)?.blocks[0])?.text.slice(0, 180) || "", image: posts.find((entry) => entry.slug === post.slug)?.image || "" }));
-for (const page of pages) previews.push({ url: `/${page.slugAsParams}`, kind: "page", title: page.title, description: page.description || "", image: "" });
+for (const page of pages.filter((page) => !page.draft)) previews.push({ url: `/${page.slugAsParams}`, kind: "page", title: page.title, description: page.description || "", image: "" });
 let collection = [];
 try { collection = JSON.parse(readFileSync(path.join(ROOT, "data/collection.json"), "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
 for (const item of collection) previews.push({ url: `/now?item=${encodeURIComponent(item.id)}`, kind: "collection", title: item.title, description: item.review || item.creator || "", image: item.cover || "", type: item.type });

@@ -10,6 +10,7 @@ import Footer from "../components/footer";
 import siteMetadata from "../../data/sitemetadata";
 import UmamiAnalytics from "../components/umami-analytics";
 import ThemeStyle from "../components/theme-style";
+import { publishedNavigation } from "../lib/published-navigation";
 
 const ImageLightbox = dynamic(() => import("../components/ImageLightbox"));
 
@@ -52,6 +53,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const navigation = publishedNavigation();
   return (
     <html
       lang={siteMetadata.language}
@@ -62,7 +64,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="mx-auto bg-background text-foreground antialiased">
         <Providers>
-          <Navbar />
+          <Navbar links={navigation} />
           <div className="max-w-7xl mx-auto px-6">
             <main>{children}</main>
             <Footer />

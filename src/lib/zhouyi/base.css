@@ -2,7 +2,7 @@
 
     .zhouyi-workbench {
       --ink: var(--foreground); --line: var(--border);
-      --red: var(--accent); --red-soft: var(--accent-soft); --zhouyi-surface: var(--surface-2);
+      --red: #B65349; --red-soft: color-mix(in srgb, #B65349 10%, var(--background)); --zhouyi-surface: var(--surface-2);
       --gap: 24px; --section-gap: 32px; --inset: 24px; --radius: var(--radius-card);
       --font: var(--font-serif);
     }
@@ -28,7 +28,7 @@
     .zhouyi-workbench .view-switch button { min-height: 36px; padding: 6px 16px; border: 0; border-radius: 3px; background: transparent; color: var(--muted); font: 14px/24px var(--font); white-space: nowrap; transition: color .15s, background .15s; }
     .zhouyi-workbench .view-switch button[aria-pressed="true"] { color: var(--red); background: var(--red-soft); }
     .zhouyi-workbench .manual-field { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; min-height: 44px; padding: 3px 3px 3px 16px; border: 1px solid var(--line); border-radius: var(--radius); transition: border-color .15s; }
-    .zhouyi-workbench .manual-field:focus-within { border-color: var(--accent); }
+    .zhouyi-workbench .manual-field:focus-within { border-color: #bf8981; }
     .zhouyi-workbench .manual-field label { flex-shrink: 0; font-size: 14px; color: var(--muted); }
     .zhouyi-workbench input[type=text] { width: 100%; min-width: 0; padding: 7px 0; border: 0; background: transparent; color: var(--ink); }
     .zhouyi-workbench #manualInput { min-height: 36px; padding: 5px 0; font: 16px/26px var(--font); font-variant-numeric: tabular-nums; letter-spacing: .06em; }
@@ -36,9 +36,9 @@
     .zhouyi-workbench .button { flex-shrink: 0; min-height: 44px; padding: 8px 24px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); font: 500 14px/24px var(--font); transition: background .15s, color .15s; }
     .zhouyi-workbench .button:hover { background: var(--zhouyi-surface); }
     .zhouyi-workbench .button.primary { color: var(--surface); background: var(--red); border-color: var(--red); }
-    .zhouyi-workbench .button.primary:hover { background: var(--accent-strong); }
+    .zhouyi-workbench .button.primary:hover { background: #a8544e; }
     .zhouyi-workbench .manual-field .button { min-height: 36px; padding: 5px 20px; border: 0; border-radius: 3px; color: var(--red); background: var(--red-soft); }
-    .zhouyi-workbench .manual-field .button:hover { background: var(--accent-soft); }
+    .zhouyi-workbench .manual-field .button:hover { background: var(--red-soft); }
     .zhouyi-workbench .error { color: var(--foreground); background: var(--red-soft); padding: 12px var(--inset); margin-top: 16px; border-radius: var(--radius); font-size: 14px; }
     .zhouyi-workbench .result { margin-top: var(--section-gap); }
     .zhouyi-workbench .hexagram-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
@@ -49,7 +49,7 @@
     .zhouyi-workbench.single-hexagram .scripture-line { padding: 22px 0; }
     .zhouyi-workbench.single-hexagram .judgment-passage { padding: 0 0 28px; border-top: 0; font-size: 22px; }
     .zhouyi-workbench.single-hexagram .yao-glyph { color: var(--red); }
-    .zhouyi-workbench.single-hexagram .yao-row:hover .yao-glyph { color: var(--accent-strong); }
+    .zhouyi-workbench.single-hexagram .yao-row:hover .yao-glyph { color: #ab514a; }
     .zhouyi-workbench .hex-card { position: relative; min-width: 0; padding: 8px var(--inset) 16px; }
     .zhouyi-workbench .hex-kicker { display: flex; align-items: center; justify-content: center; min-height: 24px; font: 14px/24px var(--font); color: var(--muted); }
     .zhouyi-workbench .hex-kicker span { letter-spacing: .12em; }
@@ -57,11 +57,11 @@
     .zhouyi-workbench .yao-stack::before { content: ""; display: block; padding-top: 70%; }
     .zhouyi-workbench .yao-row { position: absolute; left: 0; display: block; width: 100%; height: calc(100% / 6); min-height: 0; padding: 0; border: 0; border-radius: 3px; background: transparent; color: inherit; }
     .zhouyi-workbench .yao-label { position: absolute; left: 0; top: 50%; width: 13%; transform: translateY(-50%); font: 14px/1.5 var(--font); color: var(--muted); text-align: right; white-space: nowrap; }
-    .zhouyi-workbench .yao-value { position: absolute; right: 0; top: 50%; width: 13%; transform: translateY(-50%); font: 14px/1.5 var(--font); font-variant-numeric: tabular-nums; color: var(--muted); text-align: left; white-space: nowrap; }
-    .zhouyi-workbench .yao-glyph { position: absolute; left: 15%; top: 0; display: block; width: 70%; height: 100%; overflow: hidden; fill: currentColor; color: var(--accent); transition: color .15s; pointer-events: none; }
-    .zhouyi-workbench .changed .yao-glyph { color: var(--secondary); }
+    .zhouyi-workbench .yao-value { position: absolute; right: 0; top: 50%; width: 13%; transform: translateY(-50%); font: 14px/1.5 var(--font); font-variant-numeric: tabular-nums; color: #b47a74; text-align: left; white-space: nowrap; }
+    .zhouyi-workbench .yao-glyph { position: absolute; left: 15%; top: 0; display: block; width: 70%; height: 100%; overflow: hidden; fill: currentColor; color: #c16b62; transition: color .15s; pointer-events: none; }
+    .zhouyi-workbench .changed .yao-glyph { color: #cf8279; }
     .zhouyi-workbench .yao-row.moving .yao-glyph { color: var(--red); }
-    .zhouyi-workbench .yao-row:hover .yao-glyph { color: var(--accent-strong); }
+    .zhouyi-workbench .yao-row:hover .yao-glyph { color: #ab514a; }
     .zhouyi-workbench .yao-row:focus-visible { outline-offset: 5px; }
     .zhouyi-workbench .yao-tooltip { display: none; position: absolute; left: 0; right: 0; bottom: calc(100% + 10px); z-index: 4; padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: 0 5px 20px var(--shadow-tint); font: 16px/1.9 var(--font); text-align: left; pointer-events: none; }
     .zhouyi-workbench .yao-row:hover, .zhouyi-workbench .yao-row:focus-visible { z-index: 3; }
@@ -83,7 +83,7 @@
     .zhouyi-workbench .hexagram-picker .picker-search { flex-shrink: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; }
     .zhouyi-workbench .picker-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; min-height: 0; max-height: 60vh; overflow-y: auto; padding: 4px; }
     .zhouyi-workbench .picker-option { display: grid; justify-items: center; align-content: center; gap: 3px; min-height: 96px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); color: var(--ink); font: 16px/1.6 var(--font); }
-    .zhouyi-workbench .picker-option:hover, .zhouyi-workbench .picker-option[aria-pressed="true"] { border-color: var(--accent); background: var(--red-soft); color: var(--red); }
+    .zhouyi-workbench .picker-option:hover, .zhouyi-workbench .picker-option[aria-pressed="true"] { border-color: #c8948d; background: var(--red-soft); color: var(--red); }
     .zhouyi-workbench .picker-number { color: var(--muted); font-size: 12px; }
     .zhouyi-workbench .mini-hex { display: grid; gap: 2px; width: 26px; margin-bottom: 3px; color: var(--red); }
     .zhouyi-workbench .mini-line { height: 2px; background: currentColor; }
@@ -117,10 +117,10 @@
     .zhouyi-workbench .scripture-line strong { display: flex; align-items: center; gap: 8px; min-height: 22px; margin-bottom: 6px; color: var(--muted); font: 500 14px/22px var(--font); }
     .zhouyi-workbench .scripture-grid > article > :last-child { border-bottom: 1px solid var(--line); }
     .zhouyi-workbench .scripture-line.selected { background: var(--red-soft); box-shadow: inset 2px 0 var(--red); }
-    .zhouyi-workbench .scripture-line.selected strong { color: var(--accent); }
-    .zhouyi-workbench .scripture-line.secondary { background: var(--secondary-soft); box-shadow: inset 2px 0 var(--secondary); }
+    .zhouyi-workbench .scripture-line.selected strong { color: #a8564f; }
+    .zhouyi-workbench .scripture-line.secondary { background: color-mix(in srgb, #B65349 4%, var(--background)); box-shadow: inset 2px 0 #ddb3aa; }
     .zhouyi-workbench .focus-label { display: inline-flex; align-items: center; flex-shrink: 0; min-height: 22px; padding: 0 6px; border-radius: 2px; color: var(--surface); background: var(--red); font: 500 14px/22px var(--font); }
-    .zhouyi-workbench .secondary .focus-label { color: var(--secondary); background: var(--secondary-soft); }
+    .zhouyi-workbench .secondary .focus-label { color: #a16159; background: var(--red-soft); }
     .zhouyi-workbench .relations, .zhouyi-workbench .settings { border-top: 1px solid var(--line); }
     .zhouyi-workbench .relations > summary, .zhouyi-workbench .settings > summary { display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 12px 2px; list-style: none; cursor: pointer; color: var(--muted); font: 14px/24px var(--font); }
     .zhouyi-workbench summary::-webkit-details-marker { display: none; }

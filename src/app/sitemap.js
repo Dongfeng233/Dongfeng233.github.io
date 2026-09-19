@@ -1,4 +1,4 @@
-import { allPosts } from "contentlayer/generated";
+import { allPosts, allPages } from "contentlayer/generated";
 import siteMetadata from "../../data/sitemetadata";
 
 export const dynamic = "force-static";
@@ -12,7 +12,7 @@ export default async function sitemap() {
       lastModified: post.lastmod ? post.lastmod : post.publishDate,
     }));
 
-  const routes = ['', '/blog', '/about', '/explore', '/now', '/zhouyi/'].map((route) => ({
+  const routes = ['', '/blog', '/explore', '/now'].map((route) => ({
     url: `${siteMetadata.siteUrl}${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }));
@@ -22,5 +22,9 @@ export default async function sitemap() {
     lastModified: new Date().toISOString().split('T')[0],
   }));
 
-  return [...routes, ...tags, ...blogs];
+  const pages = allPages.filter((page) => !page.draft && !["now", "explore"].includes(page.slugAsParams)).map((page) => ({
+    url: `${siteMetadata.siteUrl}/${page.slugAsParams}/`,
+    lastModified: page.lastmod,
+  }));
+  return [...routes, ...pages, ...tags, ...blogs];
 }

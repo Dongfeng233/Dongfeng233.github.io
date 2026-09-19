@@ -13,6 +13,7 @@ import { EMPTY_EXPORT_SLUG, staticContentParams } from "../../lib/static-content
 const Comments = dynamic(() => import("../../components/comments"), {
   loading: () => <div className="h-32" aria-hidden />,
 })
+const ZhouyiPage = dynamic(() => import("../../components/zhouyi-page"));
 
 
 
@@ -20,7 +21,7 @@ const Comments = dynamic(() => import("../../components/comments"), {
 async function getPageFromParams(params) {
   const slug = params?.slug?.join("/")
   if (slug === EMPTY_EXPORT_SLUG) return undefined
-  const page = allPages.find((page) => page.slugAsParams === slug)
+  const page = allPages.find((page) => page.slugAsParams === slug && !page.draft)
 
   if (!page) {
     null
@@ -40,6 +41,7 @@ export async function generateMetadata(props) {
   return {
     title: page.title + " - " + siteMetadata.publishName,
     description: page.description,
+    alternates: { canonical: `/${page.slugAsParams}/` },
     openGraph: {
       title: page.title + " - " + siteMetadata.publishName,
       description: page.description,
@@ -63,7 +65,7 @@ export async function generateMetadata(props) {
 }
 
 export async function generateStaticParams() {
-  return staticContentParams(allPages.filter((page) => !["now", "explore"].includes(page.slugAsParams)).map((page) => page.slugAsParams))
+  return staticContentParams(allPages.filter((page) => !page.draft && !["now", "explore"].includes(page.slugAsParams)).map((page) => page.slugAsParams))
 }
 
 export default async function PagePage(props) {
@@ -73,6 +75,7 @@ export default async function PagePage(props) {
   if (!page) {
     notFound()
   }
+  if (page.layout === "zhouyi") return <ZhouyiPage page={page} />;
 
   return (
     <><div className="relative mx-auto max-w-5xl gap-8 xl:grid xl:grid-cols-8">

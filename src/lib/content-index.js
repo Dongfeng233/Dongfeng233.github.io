@@ -24,7 +24,7 @@ function collectionLinks(document) {
 }
 export function getContentIndex() {
   const series = config("series");
-  const nodes = [...allPosts.filter((post) => post.draft !== true).map((post) => ({ ...post, kind: "posts" })), ...allPages.map((page) => ({ ...page, kind: "pages" }))].map((document) => ({
+  const nodes = [...allPosts.filter((post) => post.draft !== true).map((post) => ({ ...post, kind: "posts" })), ...allPages.filter((page) => !page.draft).map((page) => ({ ...page, kind: "pages" }))].map((document) => ({
     kind: document.kind, slug: document.slugAsParams, url: document.kind === "posts" ? `/blog/${document.slugAsParams}` : `/${document.slugAsParams}`, title: document.title, description: document.description || "", date: document.publishDate || document.lastmod || "", image: document.image || "", tags: document.tags || [], series: (document.series || []).filter((membership) => series.some((entry) => entry.id === membership.id)), links: links(document), collections: collectionLinks(document), updates: document.updates || [],
   }));
   const published = new Set(nodes.map((node) => node.url));

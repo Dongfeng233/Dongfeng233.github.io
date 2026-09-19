@@ -76,6 +76,9 @@ export const Page = defineDocumentType(() => ({
   filePathPattern: `pages/**/*.md`,
   contentType: "mdx",
   fields: {
+    layout: { type: "enum", options: ["article", "zhouyi"], default: "article" },
+    draft: { type: "boolean", default: false },
+    eyebrow: { type: "string", default: "" },
     title: {
       type: "string",
       required: true,
