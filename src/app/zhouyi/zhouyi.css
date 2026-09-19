@@ -4,7 +4,6 @@
 .zhouyi-heading p { color: var(--muted); line-height: 1.8; }
 .zhouyi-heading .zhouyi-eyebrow { color: var(--accent); font-size: 12px; letter-spacing: .16em; }
 .zhouyi-workbench { background: transparent; }
-.zhouyi-introduction { max-width: none; margin-bottom: 28px; }
 .zhouyi-workbench .shell { width: 100%; padding: 0; }
 .zhouyi-workbench .toolbar { padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
 .zhouyi-workbench .manual-field { background: var(--background); }
