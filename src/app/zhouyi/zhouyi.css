@@ -1,0 +1,30 @@
+.zhouyi-page { margin: 0 auto; padding: 48px 0 16px; }
+.zhouyi-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+.zhouyi-heading h1 { margin: 8px 0 12px; font-size: clamp(32px, 5vw, 44px); line-height: 1.25; }
+.zhouyi-heading p { color: var(--muted); line-height: 1.8; }
+.zhouyi-heading .zhouyi-eyebrow { color: var(--accent); font-size: 12px; letter-spacing: .16em; }
+.zhouyi-download { flex-shrink: 0; color: var(--muted); font-size: 14px; padding: 8px 0; }
+.zhouyi-download:hover { color: var(--accent); }
+.zhouyi-download:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.zhouyi-workbench { background: transparent; }
+.zhouyi-workbench .shell { width: 100%; padding: 0; }
+.zhouyi-workbench .toolbar { padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
+.zhouyi-workbench .manual-field { background: var(--background); }
+.zhouyi-workbench .view-switch { background: var(--background); }
+.zhouyi-workbench .rule-line { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); }
+.zhouyi-workbench .button.primary, .zhouyi-workbench .focus-label { color: var(--background); }
+.zhouyi-workbench .hexagram-picker { box-shadow: var(--shadow-pop); border-radius: var(--radius-card); }
+.zhouyi-workbench .scripture-line, .zhouyi-workbench .yao-row { scroll-margin-top: calc(var(--nav-height) + 24px); }
+.zhouyi-workbench .tool-grid > details { border-radius: var(--radius-card); }
+@media (min-width: 1100px) {
+  .zhouyi-workbench .hexagram-grid { top: calc(var(--nav-height) + 24px); max-height: calc(100dvh - var(--nav-height) - 48px); }
+  .zhouyi-workbench:not(.single-hexagram) .reading-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (max-width: 700px) {
+  .zhouyi-page { padding-top: 28px; }
+  .zhouyi-heading { align-items: flex-start; gap: 12px; margin-bottom: 24px; }
+  .zhouyi-download { font-size: 12px; }
+  .zhouyi-workbench .toolbar { padding: 12px; }
+  .zhouyi-workbench .manual-field { padding-left: 10px; }
+  .zhouyi-workbench #manualInput { font-size: 14px; }
+}

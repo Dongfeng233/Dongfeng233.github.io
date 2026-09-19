@@ -25,9 +25,6 @@ const nextConfig = {
 };
 
 if (!isGitHubPages) {
-  nextConfig.rewrites = async () => [
-    { source: '/zhouyi', destination: '/zhouyi/index.html' },
-  ];
   nextConfig.redirects = async () => [
     { source: '/blog/page/:page*', destination: '/blog', permanent: true },
     { source: '/tags/Web3', destination: '/tags/Crypto', permanent: true },

@@ -68,13 +68,16 @@ npm run build:content
 
 ### 周易子页面
 
-`/zhouyi/` 提供读易工作台，导航中的“周易”可直接进入。页面位于 `public/zhouyi/index.html`，经文、交互与字体随页面一起发布；地址片段保留当前卦象，可复制链接分享。
+`/zhouyi/` 提供读易工作台，使用博客公共导航、页脚与明暗主题；地址片段保留当前卦象，可复制链接分享。页面也提供完整离线版下载。
 
 更新相邻 `zhouyi` 项目的成品后，在博客目录执行以下命令同步，再正常构建发布：
 
 ```powershell
-Copy-Item ../zhouyi/zhouyi.html public/zhouyi/index.html
+Copy-Item ../zhouyi/zhouyi.html public/downloads/zhouyi.html
+npm run sync:zhouyi
 ```
+
+同步脚本从离线版生成 `src/lib/zhouyi/` 下的经文交互模块、页面结构和作用域样式。博客布局样式位于 `src/app/zhouyi/zhouyi.css`。
 
 ## 同步模板更新
 
