@@ -18,6 +18,7 @@ function mulberry32(seed) {
 
 export default function FriendLinks({ friends }) {
   const [seed, setSeed] = useState(null);
+  const repository = siteMetadata.github && siteMetadata.siteRepo ? `https://github.com/${siteMetadata.github}/${siteMetadata.siteRepo}` : "";
   useEffect(() => {
     const id = setTimeout(() => setSeed(Math.floor(Math.random() * 2 ** 31)), 0);
     return () => clearTimeout(id);
@@ -66,16 +67,16 @@ export default function FriendLinks({ friends }) {
           </Link>
         ))}
       </div>
-      <p className="mt-4 py-8 text-center text-sm text-muted">
+      {repository || siteMetadata.commentsEnabled ? <p className="mt-4 py-8 text-center text-sm text-muted">
         如有意交换友链，请
-        <Link
+        {repository ? <Link
           className="mx-1 text-accent underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent-strong"
-          href="https://github.com/Dongfeng233/Dongfeng233.github.io/edit/main/data/links.yaml"
+          href={`${repository}/edit/main/data/links.yaml`}
         >
           在Github上编辑links.yaml提PR
-        </Link>
-        {siteMetadata.commentsEnabled ? "或在评论区告知：）" : null}
-      </p>
+        </Link> : null}
+        {siteMetadata.commentsEnabled ? `${repository ? "或" : ""}在评论区留言。` : null}
+      </p> : null}
       {siteMetadata.commentsEnabled ? <Comments path="/links" title="友情链接" /> : null}
     </div>
   );

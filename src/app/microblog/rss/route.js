@@ -49,12 +49,12 @@ export async function GET() {
     image: `${SITE}${siteMetadata.avatar}`,
     copyright: `© ${siteMetadata.author}. 保留所有权利。All rights reserved.`,
     updated: entries[0] ? new Date(entries[0].date) : new Date(),
-    generator: "prologue.dev microblog feed",
+    generator: "Blog microblog feed",
     ttl: 60,
     feedLinks: { rss: `${SITE}/microblog/rss` },
     author: {
       name: siteMetadata.author,
-      email: "hello@prologue.dev",
+      ...(String(siteMetadata.email || "").trim() ? { email: String(siteMetadata.email).trim() } : {}),
       link: `${SITE}/about`,
     },
   });

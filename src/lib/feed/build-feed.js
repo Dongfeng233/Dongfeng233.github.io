@@ -10,7 +10,7 @@ import { toPublicationDate } from "../date";
 
 const AUTHOR = {
   name: siteMetadata.author,
-  email: "hello@prologue.dev",
+  ...(String(siteMetadata.email || "").trim() ? { email: String(siteMetadata.email).trim() } : {}),
   link: `${siteUrl()}/about`,
 };
 
@@ -64,7 +64,7 @@ export function createFeed() {
     image: `${site}${siteMetadata.avatar}`,
     copyright: `© ${siteMetadata.author}. 保留所有权利。All rights reserved.`,
     updated: new Date(),
-    generator: "prologue.dev feed pipeline",
+    generator: "Blog feed",
     ttl: 60,
     feedLinks: {
       rss: `${site}/rss`,
