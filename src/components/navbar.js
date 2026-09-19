@@ -38,8 +38,9 @@ export default function Navbar() {
           <div className="hidden sm:block">
             {headerNavLinks.map((link) => {
               const active = pathname === link.href;
+              const NavigationLink = /^\/zhouyi\/?$/.test(link.href) ? "a" : Link;
               return (
-                <Link
+                <NavigationLink
                   key={link.title}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
@@ -50,7 +51,7 @@ export default function Navbar() {
                   }`}
                 >
                   {link.title}
-                </Link>
+                </NavigationLink>
               );
             })}
           </div>

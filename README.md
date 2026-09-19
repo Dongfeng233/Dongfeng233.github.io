@@ -66,6 +66,16 @@ npm run build:content
 
 推送 `main` 分支后，GitHub Actions 会生成静态站点并发布到 <https://dongfeng233.github.io>。
 
+### 周易子页面
+
+`/zhouyi/` 提供读易工作台，导航中的“周易”可直接进入。页面位于 `public/zhouyi/index.html`，经文、交互与字体随页面一起发布；地址片段保留当前卦象，可复制链接分享。
+
+更新相邻 `zhouyi` 项目的成品后，在博客目录执行以下命令同步，再正常构建发布：
+
+```powershell
+Copy-Item ../zhouyi/zhouyi.html public/zhouyi/index.html
+```
+
 ## 同步模板更新
 
 项目保留 `upstream` 指向原始模板：

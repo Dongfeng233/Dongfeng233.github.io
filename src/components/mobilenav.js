@@ -47,15 +47,16 @@ const MobileNav = () => {
         <MenuItems className="absolute right-0 z-50 mt-2 w-32 rounded-xl border border-border bg-surface p-2 shadow-pop">
           <div className="text-sm text-muted">
             {headerNavLinks.map((link) => {
+              const NavigationLink = /^\/zhouyi\/?$/.test(link.href) ? "a" : Link;
               return (
                 <div key={link.title} className="py-0.5">
                   <MenuItem>
-                    <Link
+                    <NavigationLink
                       href={link.href}
                       className="block rounded-lg px-3 py-2 transition-colors duration-150 hover:bg-surface-2 hover:text-accent"
                     >
                       {link.title}
-                    </Link>
+                    </NavigationLink>
                   </MenuItem>
                 </div>
               );
