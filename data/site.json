@@ -1,0 +1,42 @@
+{
+  "title": "Kaze 的博客",
+  "siteName": "Kaze 的博客",
+  "author": "Kaze",
+  "authorDesc": "吟游诗人",
+  "publishName": "Kaze",
+  "description": "关于技术、阅读与生活的长期笔记。",
+  "language": "zh-CN",
+  "keywords": [
+    "Kaze",
+    "博客",
+    "技术",
+    "阅读",
+    "随笔"
+  ],
+  "siteUrl": "https://dongfeng233.github.io",
+  "siteRepo": "Dongfeng233.github.io",
+  "favicon": "/static/avatars/-1513029915584963927.suf..jpg",
+  "avatar": "/static/avatars/-1513029915584963927.suf..jpg",
+  "cover": "/static/images/5469a4cd-030a-490c-a4a5-47fe9b6d7e83_upscayl_2x_high-fidelity-4x.png",
+  "email": "",
+  "wechatName": "",
+  "github": "Dongfeng233",
+  "comments": {
+    "enabled": true,
+    "provider": "waline",
+    "serverUrl": "https://kaze-blog-comments.vercel.app"
+  },
+  "giscus": {
+    "enabled": false,
+    "repoId": "",
+    "category": "Announcements",
+    "categoryId": ""
+  },
+  "umami": {
+    "enabled": false,
+    "scriptUrl": "",
+    "recorderUrl": "",
+    "websiteId": "",
+    "domains": ""
+  }
+}

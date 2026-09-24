@@ -1,0 +1,4 @@
+[
+  { "id": "article", "name": "文字页面", "description": "编辑关于页等独立正文。", "mark": "文", "renderer": "article", "creatable": true },
+  { "id": "zhouyi", "name": "周易", "description": "选卦、起卦与卦辞阅读工作台。", "mark": "易", "renderer": "zhouyi", "creatable": true }
+]

@@ -1,0 +1,118 @@
+import LinkPreviews from "../../components/link-previews";
+import { notFound } from "next/navigation"
+import { Suspense } from "react"
+import dynamic from "next/dynamic"
+import { allPages } from "contentlayer/generated"
+import { MDXComponent } from "../../components/mdxcomponent"
+import siteMetadata from "../../../data/sitemetadata"
+import TableofContent from "../../components/toc"
+import ScrollTopAndComment from "../../components/scroll"
+import PageTransition from "../../components/page-transition"
+import { EMPTY_EXPORT_SLUG, staticContentParams } from "../../lib/static-content-params.mjs"
+import { getPageType } from "../../lib/page-types"
+
+const Comments = dynamic(() => import("../../components/comments"), {
+  loading: () => <div className="h-32" aria-hidden />,
+})
+const pageRenderers = {
+  zhouyi: dynamic(() => import("../../components/zhouyi-page")),
+  embed: dynamic(() => import("../../components/embedded-page")),
+};
+
+
+
+
+async function getPageFromParams(params) {
+  const slug = params?.slug?.join("/")
+  if (slug === EMPTY_EXPORT_SLUG) return undefined
+  const page = allPages.find((page) => page.slugAsParams === slug && !page.draft)
+
+  if (!page) {
+    null
+  }
+
+  return page
+}
+
+export async function generateMetadata(props) {
+  const params = await props.params;
+  const page = await getPageFromParams(params)
+
+  if (!page) {
+    return {}
+  }
+
+  return {
+    title: page.title + " - " + siteMetadata.publishName,
+    description: page.description,
+    alternates: { canonical: `/${page.slugAsParams}/` },
+    openGraph: {
+      title: page.title + " - " + siteMetadata.publishName,
+      description: page.description,
+      url: "/" + page.slugAsParams,
+      siteName: siteMetadata.siteName,
+      images: [
+        {
+          url: `/og?title=${page.title}`,
+        },
+      ],
+      locale: siteMetadata.language,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: page.title + " - " + siteMetadata.publishName,
+      description: page.description,
+      images: `/og?title=${page.title}`,
+    },
+  }
+}
+
+export async function generateStaticParams() {
+  return staticContentParams(allPages.filter((page) => !page.draft && !["now", "explore"].includes(page.slugAsParams)).map((page) => page.slugAsParams))
+}
+
+export default async function PagePage(props) {
+  const params = await props.params;
+  const page = await getPageFromParams(params)
+
+  if (!page) {
+    notFound()
+  }
+  const type = getPageType(page.layout);
+  if (!type) notFound();
+  const Renderer = pageRenderers[type.renderer];
+  if (Renderer) return <Renderer page={page} />;
+  if (type.renderer !== "article") notFound();
+
+  return (
+    <><div className="relative mx-auto max-w-5xl gap-8 xl:grid xl:grid-cols-8">
+      <PageTransition className="col-span-6">
+        <article className="prose dark:prose-invert mx-auto max-w-2xl py-8">
+          <h1 className="mb-2 py-4 text-3xl font-semibold leading-tight tracking-tight text-foreground">
+            {page.title}
+          </h1>
+          {page.description && (
+            <p className="mt-2 font-serif text-base leading-7 text-foreground/70">
+              {page.description}
+            </p>
+          )}
+          <div data-reading-body><MDXComponent code={page.body.code} /></div><LinkPreviews />
+          <hr />
+          {siteMetadata.commentsEnabled ? (
+            <Suspense fallback={<div className="h-32" aria-hidden />}>
+              <Comments path={`/${page.slugAsParams}`} title={page.title} />
+            </Suspense>
+          ) : null}
+        </article>
+      </PageTransition>
+      <div
+        className="col-span-2 mx-auto sticky hidden pt-12 xl:block"
+        style={{ top: "calc(var(--nav-height) + 0.5rem)" }}
+      >
+        <p className="py-4 text-sm font-medium text-muted">目录</p>
+        <TableofContent headings={page.headings} />
+      </div>
+    </div><ScrollTopAndComment showComments={siteMetadata.commentsEnabled} /></>
+  )
+}

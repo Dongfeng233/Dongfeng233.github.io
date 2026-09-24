@@ -1,0 +1,78 @@
+import "./globals.css";
+import "./reading.css";
+import "lxgw-wenkai-webfont/lxgwwenkai-regular.css";
+import "lxgw-wenkai-webfont/lxgwwenkai-bold.css";
+import "lxgw-wenkai-webfont/lxgwwenkaimono-regular.css";
+import dynamic from "next/dynamic";
+import { Providers } from "../components/providers";
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
+import siteMetadata from "../../data/sitemetadata";
+import UmamiAnalytics from "../components/umami-analytics";
+import ThemeStyle from "../components/theme-style";
+import { publishedNavigation } from "../lib/published-navigation";
+
+const ImageLightbox = dynamic(() => import("../components/ImageLightbox"));
+
+export const metadata = {
+  metadataBase: new URL(siteMetadata.siteUrl),
+  generator: "Next.js",
+  applicationName: siteMetadata.siteRepo,
+  referrer: "origin-when-cross-origin",
+  keywords: siteMetadata.keywords,
+  authors: [{ name: siteMetadata.author, url: "/about" }],
+  creator: siteMetadata.author,
+  publisher: siteMetadata.publishName,
+  title: siteMetadata.title,
+  description: siteMetadata.description,
+  icons: {
+    icon: siteMetadata.favicon || "/favicon.svg",
+    shortcut: siteMetadata.favicon || "/favicon.svg",
+    apple: siteMetadata.favicon || "/favicon.svg",
+  },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/rss",
+      "application/atom+xml": "/atomfeed",
+      "application/feed+json": "/jsonfeed",
+    },
+  },
+  formatDetection: {
+    email: true,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    url: siteMetadata.siteUrl,
+    siteName: siteMetadata.siteName,
+    locale: siteMetadata.language,
+  },
+};
+
+export default function RootLayout({ children }) {
+  const navigation = publishedNavigation();
+  return (
+    <html
+      lang={siteMetadata.language}
+      suppressHydrationWarning
+    >
+      <head>
+        <ThemeStyle />
+      </head>
+      <body className="mx-auto bg-background text-foreground antialiased">
+        <Providers>
+          <Navbar links={navigation} />
+          <div className="max-w-7xl mx-auto px-6">
+            <main>{children}</main>
+            <Footer />
+          </div>
+          <ImageLightbox />
+        </Providers>
+        <UmamiAnalytics />
+      </body>
+    </html>
+  );
+}
