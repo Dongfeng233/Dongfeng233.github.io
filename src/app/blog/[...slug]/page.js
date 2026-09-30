@@ -172,7 +172,7 @@ export default async function PostPage(props) {
             <p className="text-sm text-faint">{post.imageDesc}</p>
           ) : null}
 
-          <ReaderTools title={post.title} slug={`/blog/${post.slugAsParams}`} />
+          <ReaderTools slug={`/blog/${post.slugAsParams}`} />
           <div data-reading-body><OptimizedHTMLRenderer htmlContent={post.body.html} /></div>
           <LinkPreviews />
           <FootnotePopovers />
