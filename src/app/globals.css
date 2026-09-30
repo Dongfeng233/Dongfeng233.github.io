@@ -474,6 +474,9 @@ html.theme-vt::view-transition-new(root) {
   --tw-prose-body: var(--foreground);
   max-width: 72ch;
   line-height: 1.85;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 /* Wider measure on desktop where the reading column has room. */
 @media (min-width: 1024px) {
