@@ -39,7 +39,8 @@ export default function MicroblogCard({ entry, compact = false }) {
       {entry.images.slice(0, limit).map((img, i) => (
         <figure key={i} className={`relative overflow-hidden rounded-lg ${cellAspect}`}>
           <Image
-            src={img.src}
+            src={img.preview}
+            data-full-src={img.src}
             alt={img.desc || "微博配图"}
             fill
             loading="lazy"

@@ -68,7 +68,7 @@ export default function ImageLightbox() {
         const images = Array.from(document.querySelectorAll('img.lightbox-image'));
         imagesRef.current = images;
         const slides = images.map((el) => ({
-          src: el.src,
+          src: el.dataset.fullSrc || el.src,
           alt: el.alt,
           caption: getCaption(el),
         }));

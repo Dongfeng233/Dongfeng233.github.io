@@ -40,7 +40,7 @@ function normalize(entry, index) {
     .filter(Boolean);
 
   const images = (entry.images || []).map((img) =>
-    typeof img === "string" ? { src: img, desc: "" } : { src: img.src, desc: img.desc || "" }
+    typeof img === "string" ? { src: img, preview: img, desc: "" } : { src: img.src, preview: img.preview || img.src, desc: img.desc || "" }
   );
 
   const normalizedDate = entry.date instanceof Date

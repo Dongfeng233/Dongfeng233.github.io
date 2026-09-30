@@ -4,6 +4,7 @@
   content: 再见啦 我未曾见过的那个世界
   images:
     - src: /static/images/5469a4cd-030a-490c-a4a5-47fe9b6d7e83_upscayl_2x_high-fidelity-4x.png
+      preview: /static/previews/microblog-20260920.webp
       desc: ''
 - date: '2026-09-12'
   time: 07:14:20.353
