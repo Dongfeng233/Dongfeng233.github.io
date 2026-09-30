@@ -493,6 +493,10 @@ html.theme-vt::view-transition-new(root) {
   border-radius: 0 0.5rem 0.5rem 0;
   padding: 0.5rem 1rem;
 }
+.prose :where(blockquote p:first-of-type):not(.not-prose *)::before,
+.prose :where(blockquote p:last-of-type):not(.not-prose *)::after {
+  content: none;
+}
 .prose :where(a):not(.not-prose *) {
   color: var(--accent);
   text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
