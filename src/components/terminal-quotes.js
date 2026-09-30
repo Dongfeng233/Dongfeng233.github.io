@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 /**
  * Zero-image decoration: a fake terminal that typewriter-types rotating
  * quotes (fed from the microblog entries). Purely client-side, ~1.5KB,
- * and disabled under prefers-reduced-motion (via MotionConfig-independent
- * check here because it's plain state).
+ * and disabled under prefers-reduced-motion.
  */
 export default function TerminalQuotes({ quotes }) {
   const [index, setIndex] = useState(0);

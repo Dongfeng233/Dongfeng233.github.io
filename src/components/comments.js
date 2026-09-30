@@ -5,19 +5,19 @@ import { useTheme } from "next-themes";
 import siteMetadata from "../../data/sitemetadata";
 import WalineComments from "./waline-comments";
 
-export default function Comments({ path, title }) {
+export default function Comments({ path, title, containerId = "comments" }) {
   const { theme, resolvedTheme } = useTheme();
   if (!siteMetadata.commentsEnabled) return null;
 
   if (siteMetadata.comments.enabled) {
     const normalizedPath = `/${String(path || "/").split(/[?#]/)[0].replace(/^\/+|\/+$/g, "")}`;
-    return <WalineComments key={normalizedPath} path={normalizedPath} title={title} serverUrl={siteMetadata.comments.serverUrl} />;
+    return <WalineComments key={normalizedPath} path={normalizedPath} title={title} serverUrl={siteMetadata.comments.serverUrl} containerId={containerId} />;
   }
 
   const commentsTheme =
     theme === "dark" || resolvedTheme === "dark" ? "transparent_dark" : "light";
   return (
-    <div id="comments" className="not-prose">
+    <div id={containerId || undefined} className="not-prose">
       <Giscus
         repo={`${siteMetadata.github}/${siteMetadata.siteRepo}`}
         repoId={siteMetadata.repoid}

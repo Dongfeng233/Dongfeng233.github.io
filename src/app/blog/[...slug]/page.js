@@ -5,8 +5,6 @@ import FootnotePopovers from "../../../components/footnote-popovers";
 import { getContentIndex } from "../../../lib/content-index";
 import "../../explore.css";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
 import { allPosts } from "contentlayer/generated";
 import "katex/dist/katex.min.css";
 import siteMetadata from "../../../../data/sitemetadata";
@@ -19,12 +17,9 @@ import TagChips from "../../../components/tag-chips";
 import RelatedPosts from "../../../components/related-posts";
 import ReadingProgress from "../../../components/reading-progress";
 import { OptimizedHTMLRenderer } from "../../../components/optimized-html-renderer";
+import DeferredComments from "../../../components/deferred-comments";
 import { formatDate, formatPublication, toPublicationDate } from "../../../lib/date";
 import { EMPTY_EXPORT_SLUG, staticContentParams } from "../../../lib/static-content-params.mjs";
-
-const Comments = dynamic(() => import("../../../components/comments"), {
-  loading: () => <div className="h-32" aria-hidden />,
-});
 
 async function getPostFromParams(params) {
   const slug = params?.slug?.join("/");
@@ -201,9 +196,7 @@ export default async function PostPage(props) {
           ) : null}
 
           {siteMetadata.commentsEnabled ? (
-            <Suspense fallback={<div className="h-32" aria-hidden />}>
-              <Comments path={`/blog/${post.slugAsParams}`} title={post.title} />
-            </Suspense>
+            <DeferredComments path={`/blog/${post.slugAsParams}`} title={post.title} />
           ) : null}
           <div className="not-prose">
             <RelatedPosts

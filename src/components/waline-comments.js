@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import "@waline/client/style";
 
-export default function WalineComments({ path, title, serverUrl }) {
+export default function WalineComments({ path, title, serverUrl, containerId = "comments" }) {
   const host = useRef(null);
   const [loadError, setLoadError] = useState(false);
 
@@ -46,7 +47,7 @@ export default function WalineComments({ path, title, serverUrl }) {
   }, [path, serverUrl]);
 
   return (
-    <section id="comments" className="moderated-comments not-prose" aria-label={title ? `${title}的评论` : "评论"}>
+    <section id={containerId || undefined} className="moderated-comments not-prose" aria-label={title ? `${title}的评论` : "评论"}>
       <header className="comments-heading">
         <h2>评论</h2>
         <p>评论审核通过后公开显示。</p>

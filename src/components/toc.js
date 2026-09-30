@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { readingTop } from "./reader-tools";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
 
 export default function TableofContent({ headings }) {
   const [activeId, setActiveId] = useState("");
@@ -88,15 +87,8 @@ export default function TableofContent({ headings }) {
         return (
           <div key={heading.id + heading.text} className="relative">
             {isActive && (
-              <motion.span
-                layoutId="toc-pill"
+              <span
                 className="absolute inset-0 -z-10 rounded-md bg-accent-soft"
-                transition={{
-                  type: "spring",
-                  stiffness: 350,
-                  damping: 32,
-                  mass: 0.6,
-                }}
               />
             )}
             <Link

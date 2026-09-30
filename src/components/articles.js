@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { AnimatePresence, motion } from "framer-motion";
 import Card from "./card";
 import { usePostSearch } from "../lib/use-post-search";
 import { tagLabel } from "../../data/tagLabels";
@@ -89,18 +88,11 @@ export default function Articles({ articles, topTags = [] }) {
   const cardGrid = (list, animate = false) => (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {animate ? (
-        <AnimatePresence initial={false}>
-          {list.map((article) => (
-            <motion.div
-              key={article.slug}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Card {...cardProps(article)} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
+        list.map((article) => (
+          <div key={article.slug} className="article-card-enter">
+            <Card {...cardProps(article)} />
+          </div>
+        ))
       ) : (
         list.map((article) => <Card key={article.slug} {...cardProps(article)} />)
       )}

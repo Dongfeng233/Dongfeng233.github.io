@@ -2,7 +2,7 @@ import "./globals.css";
 import "./reading.css";
 import "lxgw-wenkai-webfont/lxgwwenkai-regular.css";
 import "lxgw-wenkai-webfont/lxgwwenkai-bold.css";
-import "lxgw-wenkai-webfont/lxgwwenkaimono-regular.css";
+import localFont from "next/font/local";
 import dynamic from "next/dynamic";
 import { Providers } from "../components/providers";
 import Navbar from "../components/navbar";
@@ -13,6 +13,14 @@ import ThemeStyle from "../components/theme-style";
 import { publishedNavigation } from "../lib/published-navigation";
 
 const ImageLightbox = dynamic(() => import("../components/ImageLightbox"));
+const readingFont = localFont({
+  src: [
+    { path: "../../public/fonts/reading-regular.woff2", weight: "400", style: "normal" },
+    { path: "../../public/fonts/reading-bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-reading",
+  display: "swap",
+});
 
 export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -57,6 +65,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang={siteMetadata.language}
+      className={readingFont.variable}
       suppressHydrationWarning
     >
       <head>

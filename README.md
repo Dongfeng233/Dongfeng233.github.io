@@ -66,6 +66,8 @@ npm run build:content
 
 推送 `main` 分支后，GitHub Actions 会生成静态站点并发布到 <https://dongfeng233.github.io>。
 
+首页与文章共用两份预加载的阅读字体。新增文章带来较多新字时，先构建站点，再运行 `python scripts/build-reading-fonts.py` 更新 `public/fonts` 中的字体文件；发布流程会继续提供其余字符的分片字库。生成脚本使用本机的 `fontTools` 与 `brotli`。
+
 ### 周易子页面
 
 `/zhouyi/` 提供读易工作台，使用博客公共导航、页脚与明暗主题；地址片段保留当前卦象，可复制链接分享。
