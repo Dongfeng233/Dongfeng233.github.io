@@ -13,6 +13,7 @@ import readingTime from "reading-time";
 import rehypeFigure from "./src/components/rehype-figure"
 import remarkGemoji from "remark-gemoji";
 import rehypeMermaidPre from "./src/components/rehype-mermaid-pre.js"
+import rehypeKeepMathPunctuation from "./src/lib/rehype-keep-math-punctuation.mjs"
 import rehypeStringify from 'rehype-stringify'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
@@ -163,7 +164,7 @@ export const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "./data/content",
   documentTypes: [Post, Page],
-  mdx: { remarkPlugins: [remarkGfm, remarkMath, remarkDirective, remarkFolds], rehypePlugins: [rehypeKatex, rehypeSlug, readingAnchors] },
+  mdx: { remarkPlugins: [remarkGfm, remarkMath, remarkDirective, remarkFolds], rehypePlugins: [rehypeKatex, rehypeKeepMathPunctuation, rehypeSlug, readingAnchors] },
   markdown: {
     remarkPlugins: [remarkParse, remarkDirective, remarkFolds,[remarkRehype, { footnoteLabel: "旁注", footnoteBackLabel: "返回正文" }], remarkGfm, remarkMath, remarkGemoji],
     rehypePlugins: [
@@ -175,6 +176,7 @@ export default makeSource({
           output: 'htmlAndMathml'
         }
       ],
+      rehypeKeepMathPunctuation,
       rehypeSlug,
       rehypeFigure,
       rehypeMermaidPre,

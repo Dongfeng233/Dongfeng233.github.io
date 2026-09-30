@@ -532,6 +532,10 @@ figcaption {
   white-space: normal;
   text-indent: 0;
 }
+.inline-math-punctuation {
+  display: inline-block;
+  white-space: nowrap;
+}
 
 /* 强制 KaTeX display 公式换行 */
 .katex-display {
