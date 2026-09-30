@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 const normalize = (value) => value.replace(/\s+/g, " ").trim();
-function read(key, fallback) { try { return JSON.parse(localStorage.getItem(key) || "null") ?? fallback; } catch { return fallback; } }
 function hashId() { try { return decodeURIComponent(location.hash.slice(1)); } catch { return location.hash.slice(1); } }
 export function readingTop() {
   const root = document.querySelector(".reader-tools"), actions = root?.querySelector(":scope > .reader-actions");
@@ -33,30 +32,16 @@ function literalRanges(root, query) {
   return ranges;
 }
 export default function ReaderTools({ slug }) {
-  const [resume, setResume] = useState(null), [message, setMessage] = useState(""), [query, setQuery] = useState("");
-  const progressKey = `blog-reading-progress:v1:${slug}`;
+  const [message, setMessage] = useState(""), [query, setQuery] = useState("");
   useEffect(() => {
     const root = document.querySelector("[data-reading-body]"); if (!root) return;
-    setResume(read(progressKey, null)); setQuery(new URLSearchParams(location.search).get("highlight") || "");
-    let interacted = false, timer;
-    const interact = (event) => { interacted = true; if (event.type === "pointerdown" || event.type === "touchstart" || event.type === "keydown" && event.key === "Enter") record(); };
-    const record = () => {
-      if (!interacted || !root.isConnected) return;
-      const blocks = [...root.querySelectorAll("[data-reading-anchor]")];
-      const node = blocks.find((node) => node.getBoundingClientRect().bottom > readingTop()) || blocks.at(-1);
-      if (!node) return;
-      const percent = Math.round(Math.max(0, Math.min(100, (readingTop() - root.getBoundingClientRect().top) / Math.max(1, root.offsetHeight) * 100)));
-      try { localStorage.setItem(progressKey, JSON.stringify({ anchor: node.id, quote: normalize(node.textContent).slice(0,180), offset: node.getBoundingClientRect().top - readingTop(), percent, updatedAt: Date.now() })); } catch {}
-    };
-    const scroll = () => { clearTimeout(timer); timer = setTimeout(record, 500); };
-    window.addEventListener("scroll", scroll, { passive: true }); window.addEventListener("pagehide", record);
-    for (const name of ["wheel", "pointerdown", "keydown", "touchstart"]) window.addEventListener(name, interact, { passive: true });
-    const syncQuery = () => setQuery(new URLSearchParams(location.search).get("highlight") || "");
+    const syncQuery = () => { const next = new URLSearchParams(location.search).get("highlight") || ""; setQuery(next); if (!next) setMessage(""); };
+    syncQuery();
     window.addEventListener("popstate", syncQuery);
     const hash = () => { syncQuery(); const target = document.getElementById(hashId()); if (target && root.contains(target)) { reveal(target); requestAnimationFrame(() => target.scrollIntoView({ block: "center" })); } };
     if (location.hash) hash(); window.addEventListener("hashchange", hash);
-    return () => { record(); clearTimeout(timer); window.removeEventListener("popstate", syncQuery); window.removeEventListener("scroll", scroll); window.removeEventListener("pagehide", record); window.removeEventListener("hashchange", hash); for (const name of ["wheel", "pointerdown", "keydown", "touchstart"]) window.removeEventListener(name, interact); };
-  }, [slug, progressKey]);
+    return () => { window.removeEventListener("popstate", syncQuery); window.removeEventListener("hashchange", hash); };
+  }, [slug]);
   useEffect(() => {
     const root = document.querySelector("[data-reading-body]"); if (!root || !query) return;
     let target = document.getElementById(hashId());
@@ -68,17 +53,8 @@ export default function ReaderTools({ slug }) {
     const frame = requestAnimationFrame(() => { target.scrollIntoView({ block: "center" }); });
     return () => { cancelAnimationFrame(frame); target.classList.remove("search-hit-block"); CSS.highlights?.delete("blog-search"); };
   }, [query, slug]);
-  function jump(anchor, quote = "", offset) {
-    const root = document.querySelector("[data-reading-body]");
-    let node = document.getElementById(anchor); if (node && !root?.contains(node)) node = null;
-    if (!node && quote) node = [...document.querySelectorAll("[data-reading-body] [data-reading-anchor]")].find((node) => normalize(node.textContent).includes(quote));
-    if (!node) { setMessage("这段内容已有修改，请用页面搜索查找摘录。"); return; }
-    reveal(node); if (Number.isFinite(offset)) window.scrollTo({ top: window.scrollY + node.getBoundingClientRect().top - readingTop() - offset, behavior: "instant" }); else node.scrollIntoView({ block: "center", behavior: "instant" });
-  }
-  const showResume = resume?.percent > 2 && resume.percent < 98 && !query;
-  if (!showResume && !query && !message) return null;
+  if (!query && !message) return null;
   return <div className="reader-tools not-prose"><style>{"::highlight(blog-search) { color: var(--background); background-color: var(--accent); }"}</style><div className="reader-actions">
-    {showResume ? <button onClick={() => jump(resume.anchor, resume.quote || "", resume.offset)}>继续上次阅读 · {resume.percent}%</button> : null}
-    {query ? <button onClick={() => { const url = new URL(location.href); url.searchParams.delete("highlight"); history.replaceState(null, "", url.pathname + url.search + url.hash); setQuery(""); }} aria-label="清除搜索高亮">清除高亮</button> : null}
+    {query ? <button onClick={() => { const url = new URL(location.href); url.searchParams.delete("highlight"); history.replaceState(null, "", url.pathname + url.search + url.hash); setQuery(""); setMessage(""); }} aria-label="清除搜索高亮">清除高亮</button> : null}
   </div>{message ? <p role="status">{message}</p> : null}</div>;
 }
