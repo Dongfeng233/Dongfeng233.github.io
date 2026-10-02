@@ -4,11 +4,12 @@
   "license": "MIT",
   "scripts": {
     "sync:zhouyi": "node scripts/sync-zhouyi.mjs",
-    "dev": "contentlayer2 build && node scripts/build-search-index.mjs && concurrently -k -n content,next -c blue,green \"contentlayer2 dev\" \"next dev --turbopack\"",
-    "build": "contentlayer2 build && node scripts/build-search-index.mjs && next build --turbopack && node scripts/clean-empty-static-routes.mjs",
+    "dev": "npm run build:content && npm run build:fonts && concurrently -k -n content,next -c blue,green \"contentlayer2 dev\" \"next dev --turbopack\"",
+    "build": "npm run build:content && npm run build:fonts && next build --turbopack && node scripts/clean-empty-static-routes.mjs",
     "start": "next start",
     "lint": "eslint .",
-    "build:content": "contentlayer2 build && node scripts/build-search-index.mjs"
+    "build:content": "contentlayer2 build && node scripts/build-search-index.mjs",
+    "build:fonts": "python scripts/build-reading-fonts.py"
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
