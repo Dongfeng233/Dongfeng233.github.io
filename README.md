@@ -5,9 +5,12 @@
 ## 本地运行
 
 ```bash
-npm install
+npm ci
+python -m pip install -r scripts/requirements-reading-fonts.txt
 npm run dev
 ```
+
+本地构建使用 Node.js 24 与 Python 3.13；Python 依赖版本与 CI、Pages 保持一致。
 
 打开 <http://localhost:3000>。
 
@@ -60,13 +63,18 @@ npm run dev
 npm run build
 npm run start
 npm run build:content
+npm run build:fonts
 ```
 
 ## GitHub Pages
 
 推送 `main` 分支后，GitHub Actions 会生成静态站点并发布到 <https://dongfeng233.github.io>。
 
-首页与文章共用两份预加载的阅读字体。新增文章带来较多新字时，先构建站点，再运行 `python scripts/build-reading-fonts.py` 更新 `public/fonts` 中的字体文件；发布流程会继续提供其余字符的分片字库。生成脚本使用本机的 `fontTools` 与 `brotli`。
+首页与文章共用两份预加载的阅读字体。`npm run build` 按顺序执行 Contentlayer 内容编译、搜索索引生成、阅读字体生成、Next.js 构建。字体生成器从 Contentlayer 的已发布文章与页面，以及 `data/`、`src/` 的站点文字中收集字符超集，包含 HTML 实体和 JSON Unicode 转义对应的字符。Next.js 随后将新字体打包到发布产物中。
+
+两份 `public/fonts/reading-*.woff2` 是自动生成的构建产物。日常更新只需提交内容，CI 与 Pages 使用相同的依赖安装和 `npm run build` 流程。`npm run dev` 启动时也会生成字体；单独刷新字体时，依次运行 `npm run build:content` 与 `npm run build:fonts`。字库中其余字符继续通过 Unicode-range 分片与系统字体提供。
+
+生成使用锁定版本的 fontTools、Brotli 和 npm 字库，按固定顺序合并与裁剪，保留源字体时间戳。同一套依赖与源内容重复生成时，两份 WOFF2 的字节保持一致。
 
 ### 周易子页面
 

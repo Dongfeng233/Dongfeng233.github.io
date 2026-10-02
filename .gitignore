@@ -33,3 +33,6 @@
 
 /public/search-content.json
 /public/link-index.json
+
+# generated reading fonts (built before Next.js)
+/public/fonts/reading-*.woff2
